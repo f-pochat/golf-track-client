@@ -8,6 +8,7 @@ ReactDOM.render(
   <React.StrictMode>
       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootswatch@4.5.2/dist/superhero/bootstrap.min.css"
             integrity="sha384-HnTY+mLT0stQlOwD3wcAzSVAZbrBp141qwfR4WfTqVQKSgmcgzk+oP0ieIyrxiFO" crossOrigin="anonymous"/>
+      <script src="https://kit.fontawesome.com/ea3bc2f346.js" crossOrigin="anonymous"/>
     <App />
   </React.StrictMode>,
   document.getElementById('root')
