@@ -9,7 +9,8 @@ function Login(props) {
     const [incorrect, setIncorrect] = useState(false)
 
     let navigate = useNavigate();
-    const submitUser = () => {
+    const submitUser = (e) => {
+        e.preventDefault();
         const users = {
             'User' : user,
             'Password' : pass,
@@ -18,9 +19,9 @@ function Login(props) {
 
         if (users.User === 'Alejo' && users.Password === 'Salta'){
             navigate(path);
-            props.parentCallback(true)
+            props.parentCallback(true);
         }else{
-            setIncorrect(true)
+            setIncorrect(true);
         }
     }
     return (
