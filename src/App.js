@@ -13,6 +13,8 @@ import {useState} from "react";
 
 
 function App() {
+    document.title = 'Golf Track'
+
     const [userOk, setUserOk] = useState(false)
 
     const userIsOkay = (childData) => {

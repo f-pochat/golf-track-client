@@ -1,7 +1,5 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import axios from "axios";
-
 
 
 function Login(props) {
@@ -40,12 +38,12 @@ function Login(props) {
                             <div className="form-group">
                                 <label htmlFor="exampleInputUsername1" className="form-label mt-4">Username</label>
                                 <input type="text" className="form-control" id={"user"}
-                                      placeholder="Enter username" onChange={e => setUser(e.target.value)}/>
+                                      placeholder="Enter username..." onChange={e => setUser(e.target.value)}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
                                 <input type="password" className="form-control" id={"password"}
-                                       placeholder="Password" onChange={e => setPass(e.target.value)}/>
+                                       placeholder="Enter password..." onChange={e => setPass(e.target.value)}/>
                             </div>
 
                             <button type="submit" className="btn btn-info" onClick={submitUser}>Enter</button>
