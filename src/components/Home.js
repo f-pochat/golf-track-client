@@ -2,6 +2,7 @@ import React from 'react';
 import Navbar from "./Navbar";
 import {IoIosCreate, IoIosTrash} from "react-icons/io";
 
+
 function Home() {
     const courses = [
         {
