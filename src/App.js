@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
+import DeleteConfirmation from "./components/DeleteConfirmation"
 
 import {
     BrowserRouter as Router,
@@ -32,10 +33,10 @@ function App() {
                 <Route path="/home"
                        element={userOk ?  <Home/> : <Navigate to="/" />}/>
 
-
+                <Route path="delete"
+                element={<DeleteConfirmation/>} />
             </Routes>
         </Router>
-
     </div>
   );
 }
