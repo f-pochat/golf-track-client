@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from "./Navbar";
 import {IoIosCreate, IoIosTrash} from "react-icons/io";
+import DeleteConfirmation from "./DeleteConfirmation";
 
 function Home() {
     const courses = [
@@ -24,6 +25,7 @@ function Home() {
     return (
         <div>
             <Navbar/>
+            <DeleteConfirmation/>
             <div>
                 {
                     // eslint-disable-next-line array-callback-return
