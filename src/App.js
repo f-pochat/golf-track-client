@@ -1,6 +1,7 @@
 import './App.css';
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
+import Profile from"./components/Profile";
 
 import {
     BrowserRouter as Router,
@@ -9,7 +10,8 @@ import {
     Link, Navigate
 } from 'react-router-dom';
 import Home from "./components/Home";
-import {useState} from "react";
+import {Component, Profiler, useState} from "react";
+
 
 
 function App() {
@@ -31,6 +33,9 @@ function App() {
 
                 <Route path="/home"
                        element={userOk ?  <Home/> : <Navigate to="/" />}/>
+
+                <Route path="/profile"
+                       element={<Profile/>}/>
             </Routes>
         </Router>
     </div>
