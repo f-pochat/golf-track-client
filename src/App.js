@@ -2,6 +2,7 @@ import './App.css';
 import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Profile from"./components/Profile";
+import AddUser from "./components/AddUser";
 
 import {
     BrowserRouter as Router,
@@ -31,11 +32,16 @@ function App() {
                     path = "/"
                     element = {<Login parentCallback = {userIsOkay} />}/>
 
-                <Route path="/home"
-                       element={userOk ?  <Home/> : <Navigate to="/" />}/>
+                < Route path="/home"
+                       //element={userOk ?  <Home/> : <Navigate to="/" />}/>
+                        element={<Home/>} />
 
                 <Route path="/profile"
                        element={<Profile/>}/>
+
+                <Route path="/addUser"
+                       element={<AddUser/>}/>
+
             </Routes>
         </Router>
     </div>
