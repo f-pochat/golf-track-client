@@ -28,7 +28,7 @@ function AddUser(props) {
                                        placeholder="Enter admin password..." />
                             </div>
                             <div className="form-group">
-                                <label htmlFor="exampleSelect1" className="form-label mt-4">Admin's role</label>
+                                <label htmlFor="exampleSelect1" className="form-label mt-4">Admin's role </label>
                                 <select className="form-select" id="exampleSelect1">
                                     <option>Admin</option>
                                     <option>Editor</option>
