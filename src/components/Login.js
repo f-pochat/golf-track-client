@@ -30,9 +30,6 @@ function Login(props) {
             <div className="col-4"/>
             <div className="col-4">
                 <div className="d-flex flex-column">
-                    <div className="mt-4">
-                        {incorrect ? <span className="lg-badge bg-danger mt-2" >Incorrect username or password</span> : null}
-                    </div>
                     <img className="pt-5 mx-auto ml-3" src = {require('../assets/golfMan.png')} alt="Golf Man"/>
                     <form>
                         <fieldset>
@@ -47,8 +44,11 @@ function Login(props) {
                                        placeholder="Enter password..." onChange={e => setPass(e.target.value)}/>
                             </div>
 
-                            <button type="submit" className="btn btn-info" onClick={submitUser}>Enter</button>
+                            <button type="submit" className="btn btn-primary" onClick={submitUser}>Enter</button>
                         </fieldset>
+                        <div className="mt-4">
+                            {incorrect ? <span className="lg-badge bg-danger mt-2" >Incorrect username or password</span> : null}
+                        </div>
                     </form>
                 </div>
             </div>

@@ -55,6 +55,12 @@ function Home() {
             id: '5'
         },
     ]
+
+    function deleteCourse() {
+        console.log("Delete" + id);
+        closeModal();
+    }
+
     return (
         <div>
             <Navbar/>
@@ -68,7 +74,7 @@ function Home() {
                 <h2> Are you sure you want to delete this course?</h2>
                 <div className="d-flex justify-content-end">
                     <button className="btn btn-primary m-3" onClick={closeModal}>Cancel</button>
-                    <button className="btn btn-danger m-3" onClick={()=> console.log("Delete" + id)}>Delete</button>
+                    <button className="btn btn-danger m-3" onClick={deleteCourse}>Delete</button>
                 </div>
             </Modal>
             <div>

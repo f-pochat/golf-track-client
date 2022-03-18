@@ -2,7 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 
 
-function AddCourt(props) {
+function AddCourse(props) {
 
     const [court, setCourt] = useState('');
     const [location, setLocation] = useState('');
@@ -46,4 +46,4 @@ function AddCourt(props) {
     );
 }
 
-export default AddCourt;
+export default AddCourse;

@@ -10,6 +10,12 @@ function Profile(){
         setEditMode(true)
     }
 
+    const untoggleEditMode = (e) => {
+        e.preventDefault();
+        setEditMode(false);
+        navigate("/home");
+    }
+
     let navigate = useNavigate();
     const goToAddUser = () => {
         navigate("/addUser");
@@ -30,7 +36,7 @@ function Profile(){
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type="text" disabled={!editMode} className="form-control" id={"password"} defaultValue={"password"}/>
+                                <input type="text" disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputRoll" className="form-label mt-4">Role</label>
@@ -38,8 +44,8 @@ function Profile(){
                             </div>
                             <div className="flex-row">
                                 <button className="btn btn-primary m-2" onClick={goToAddUser}>Add User</button>
-                                <button className="btn btn-primary m-2" disabled={editMode} onClick={toggleEditMode} >Edit</button>
-                                <button className="btn btn-primary m-2" disabled={!editMode} onClick={(e) => {e.preventDefault();setEditMode(false)}}>Save</button>
+                                <button className="btn btn-primary m-2" disabled={editMode} onClick={toggleEditMode} >Edit Password</button>
+                                <button className="btn btn-primary m-2" disabled={!editMode} onClick={untoggleEditMode}>Save</button>
                             </div>
 
                         </fieldset>

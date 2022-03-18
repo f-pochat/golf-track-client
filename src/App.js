@@ -3,7 +3,7 @@ import Navbar from "./components/Navbar";
 import Login from "./components/Login";
 import Profile from"./components/Profile";
 import AddUser from "./components/AddUser";
-import AddCourt from "./components/AddCourt";
+import AddCourse from "./components/AddCourse";
 
 import {
     BrowserRouter as Router,
@@ -44,7 +44,7 @@ function App() {
                        element={<AddUser/>}/>
 
                 <Route path="/addCourt"
-                       element={<AddCourt/>}/>
+                       element={<AddCourse/>}/>
 
             </Routes>
         </Router>

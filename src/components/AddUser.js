@@ -3,10 +3,26 @@ import {useNavigate} from "react-router-dom";
 
 
 function AddUser(props) {
+    const [user,setUser] =useState('');
+    const [pass,setPass] =useState('');
+    const [incorrect, setIncorrect] = useState(false)
 
     let navigate = useNavigate();
-    const returnToHome = () => {
-        navigate("/home");
+
+    const createAdmin = (e) => {
+        e.preventDefault();
+        const users = {
+            'User' : user,
+            'Password' : pass,
+        }
+        let path = '/home';
+
+        if (users.User === 'Fede' && users.Password === 'Pochat'){
+            navigate(path);
+            props.parentCallback(true);
+        }else{
+            setIncorrect(true);
+        }
     }
 
     return (
@@ -20,12 +36,12 @@ function AddUser(props) {
                             <div className="form-group">
                                 <label htmlFor="exampleInputUsername1" className="form-label mt-4">Username</label>
                                 <input type="text" className="form-control" id={"user"}
-                                       placeholder="Enter admin username..." />
+                                       placeholder="Enter admin username..." onChange={e => setUser(e.target.value)}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
                                 <input type="text" className="form-control" id={"password"}
-                                       placeholder="Enter admin password..." />
+                                       placeholder="Enter admin password..." onChange={e => setPass(e.target.value)}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleSelect1" className="form-label mt-4">Admin's role </label>
@@ -33,9 +49,12 @@ function AddUser(props) {
                                     <option>Admin</option>
                                     <option>Editor</option>
                                 </select>
+                                <div className="mt-4">
+                                    {incorrect ? <span className="lg-badge bg-danger mt-2" >Invalid data</span> : null}
+                                </div>
                             </div>
 
-                            <button type="submit" className="btn btn-primary" onClick={returnToHome}>Creat admin</button>
+                            <button type="submit" className="btn btn-primary"  onClick={createAdmin}>Creat admin</button>
                         </fieldset>
                     </form>
                 </div>
