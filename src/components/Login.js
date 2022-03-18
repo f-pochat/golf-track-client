@@ -27,7 +27,14 @@ function Login(props) {
     return (
         <div className="d-flex justify-content-center">
             <link rel="stylesheet" href={require('./Login.css')}/>
-            <div className="col-4"/>
+            <div className="col-4">
+                <div className="d-flex flex-column">
+                <img className="pt-5 mx-auto ml-3" src = {require('../assets/publicidad.png')} alt="Publicidad"/>
+                    <img className="pt-5 mx-auto ml-3" src = {require('../assets/publicidad.png')} alt="Publicidad"/>
+                    <img className="pt-5 mx-auto ml-3" src = {require('../assets/publicidad.png')} alt="Publicidad"/>
+                </div>
+            </div>
+
             <div className="col-4">
                 <div className="d-flex flex-column">
                     <img className="pt-5 mx-auto ml-3" src = {require('../assets/golfMan.png')} alt="Golf Man"/>
@@ -52,7 +59,13 @@ function Login(props) {
                     </form>
                 </div>
             </div>
-            <div className="col-4"/>
+            <div className="col-4">
+            <div className="d-flex flex-column">
+                <img className="pt-5 mx-auto ml-3" src = {require('../assets/publicidad.png')} alt="Publicidad"/>
+                <img className="pt-5 mx-auto ml-3" src = {require('../assets/publicidad.png')} alt="Publicidad"/>
+                <img className="pt-5 mx-auto ml-3" src = {require('../assets/publicidad.png')} alt="Publicidad"/>
+            </div>
+            </div>
         </div>
     );
 }
