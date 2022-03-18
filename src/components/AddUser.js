@@ -35,7 +35,7 @@ function AddUser(props) {
                                 </select>
                             </div>
 
-                            <button type="submit" className="btn btn-info" onClick={returnToHome}>Creat admin</button>
+                            <button type="submit" className="btn btn-primary" onClick={returnToHome}>Creat admin</button>
                         </fieldset>
                     </form>
                 </div>
