@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import MapContainer from "./MapContainer";
 
 
 function AddCourse(props) {
@@ -26,14 +27,13 @@ function AddCourse(props) {
                     <form>
                         <fieldset>
                             <div className="form-group">
-                                <label htmlFor="exampleInputUsername1" className="form-label mt-4">Court name</label>
+                                <label htmlFor="exampleInputUsername1" className="form-label mt-4">Course name</label>
                                 <input type="text" className="form-control" id={"court"}
-                                       placeholder="Enter court name..." onChange={e => setCourt(e.target.value)}/>
+                                       placeholder="Enter course name..." onChange={e => setCourt(e.target.value)}/>
                             </div>
                             <div className="form-group">
-                                <label htmlFor="exampleInputText1" className="form-label mt-4">Court Location</label>
-                                <input type="text" className="form-control" id={"location"}
-                                       placeholder="Enter location..." onChange={e => setLocation(e.target.value)}/>
+                                <label htmlFor="exampleInputText1" className="form-label mt-4">Course Location</label>
+                                <MapContainer/>
                             </div>
 
                             <button type="submit" className="btn btn-primary" onClick={submitCourt}>Add Court</button>
