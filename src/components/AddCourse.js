@@ -33,14 +33,16 @@ function AddCourse(props) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputText1" className="form-label mt-4">Course Location</label>
-                                <MapContainer/>
+                                <MapContainer></MapContainer>
                             </div>
-
                             <button type="submit" className="btn btn-primary" onClick={submitCourt}>Add Court</button>
+
                         </fieldset>
                     </form>
+
                 </div>
             </div>
+
             <div className="col-4"/>
         </div>
     );
