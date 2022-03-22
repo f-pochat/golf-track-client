@@ -17,7 +17,7 @@ function AddUser(props) {
         }
         let path = '/home';
 
-        if (users.User === 'Fede' && users.Password === 'Pochat'){
+        if (users.User !== '' && users.Password !== ''){
             navigate(path);
             props.parentCallback(true);
         }else{
@@ -40,21 +40,21 @@ function AddUser(props) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type="text" className="form-control" id={"password"}
+                                <input type="password" className="form-control" id={"password"}
                                        placeholder="Enter admin password..." onChange={e => setPass(e.target.value)}/>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleSelect1" className="form-label mt-4">Admin's role </label>
-                                <select className="form-select" id="exampleSelect1">
-                                    <option>Admin</option>
+                                <select className="form-control" id="exampleSelect1">
                                     <option>Editor</option>
+                                    <option>Admin</option>
                                 </select>
                                 <div className="mt-4">
                                     {incorrect ? <span className="lg-badge bg-danger mt-2" >Invalid data</span> : null}
                                 </div>
                             </div>
 
-                            <button type="submit" className="btn btn-primary"  onClick={createAdmin}>Creat admin</button>
+                            <button type="submit" className="btn btn-primary"  onClick={createAdmin}>Create admin</button>
                         </fieldset>
                     </form>
                 </div>
