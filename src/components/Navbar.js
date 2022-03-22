@@ -6,7 +6,7 @@ function Navbar() {
         <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
             <div className="container-fluid">
                 <a href="/profile" className="text-light"><FaUserEdit size={40} className="m-2"/></a>
-                <a href="/addCourt" className="text-light"><IoIosAddCircleOutline size={40} className="m-2"/></a>
+                <a href="/addCourse" className="text-light"><IoIosAddCircleOutline size={40} className="m-2"/></a>
             </div>
         </nav>
     );

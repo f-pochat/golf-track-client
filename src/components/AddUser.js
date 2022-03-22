@@ -45,10 +45,20 @@ function AddUser(props) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleSelect1" className="form-label mt-4">Admin's role </label>
-                                <select className="form-control" id="exampleSelect1">
-                                    <option>Editor</option>
-                                    <option>Admin</option>
-                                </select>
+                                <div className="form-check">
+                                    <input className="form-check-input" type="radio" name="flexRadioDefault"
+                                           id="Admin"/>
+                                    <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                        Admin
+                                    </label>
+                                </div>
+                                <div className="form-check">
+                                    <input className="form-check-input" type="radio" name="flexRadioDefault"
+                                           id="Editor" checked/>
+                                    <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                        Editor
+                                    </label>
+                                </div>
                                 <div className="mt-4">
                                     {incorrect ? <span className="lg-badge bg-danger mt-2" >Invalid data</span> : null}
                                 </div>

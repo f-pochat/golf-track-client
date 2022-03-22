@@ -9,7 +9,6 @@ function AddCourse(props) {
     const [tempTeeBox, setTempTeeBox] = useState('');
     const [course, setCourse] = useState('');
     const [location, setLocation] = useState('');
-
     let [teeboxes, setTeeBoxes] = useState([]);
 
     let navigate = useNavigate();
@@ -28,9 +27,9 @@ function AddCourse(props) {
     const handleChange = (e) => {
         setTempTeeBox(e.target.value);
     }
-
+//agregar al array de tees
     const pushTeeBox = () => {
-        if (teeboxes.includes(tempTeeBox)) return;
+        if (teeboxes.includes(tempTeeBox) || tempTeeBox==='') return;
         let aux = teeboxes.concat(tempTeeBox)
         setTeeBoxes(aux);
         setTempTeeBox('');
@@ -57,27 +56,32 @@ function AddCourse(props) {
 
                         <div className="form-group w-25 mx-auto">
                             <label htmlFor="exampleInputUsername1" className="form-label mt-4">Course name</label>
-                            <input type="text" className="form-control" id={"court"}
+                            <input type="text" className="form-control" id={"course"}
                                    placeholder="Enter course name..." onChange={e => setCourse(e.target.value)}/>
                         </div>
 
                         <div className="row mt-5">
                             <div className="col-7">
                                 <div className="row">
-                                    <div className="col-3">
+                                    <div className="col-4 mt-2">
                                         <label htmlFor="exampleFormControlHoles">Holes</label>
-                                        <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions"
-                                                   id="inlineRadio1" value="option9"/>
-                                            <label className="form-check-label" htmlFor="inlineRadio1">9</label>
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="radio" name="flexRadioDefault"
+                                                   id="flexRadioDefault1"/>
+                                                <label className="form-check-label" htmlFor="flexRadioDefault1">
+                                                     09
+                                                </label>
                                         </div>
-                                        <div className="form-check form-check-inline">
-                                            <input className="form-check-input" type="radio" name="inlineRadioOptions"
-                                                   id="inlineRadio2" value="option18"/>
-                                            <label className="form-check-label" htmlFor="inlineRadio2">18</label>
+                                        <div className="form-check">
+                                            <input className="form-check-input" type="radio" name="flexRadioDefault"
+                                                   id="flexRadioDefault2" checked/>
+                                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                                    18
+                                                </label>
                                         </div>
+
                                     </div>
-                                    <div className="col-9">
+                                    <div className="col-8">
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlTextarea1">Description</label>
                                             <textarea className="form-control" style={{resize: "none"}} id="exampleFormControlTextarea1" rows="3"/>
@@ -89,11 +93,11 @@ function AddCourse(props) {
                                 <div className="form-group w-75 mx-auto">
                                     <label htmlFor="exampleFormControlTeeBox">Tee Box</label>
                                     <div className="row">
-                                        <div className="col-9">
+                                        <div className="col-10">
                                             <input type="text" className="form-control"
                                                    placeholder="Enter tee box..." value={tempTeeBox} onChange={handleChange}/>
                                         </div>
-                                        <div className="col-3">
+                                        <div className="col-2">
                                             <a onClick={pushTeeBox}><IoIosCheckmark className="text-dark" size={40}/></a>
                                         </div>
                                     </div>
