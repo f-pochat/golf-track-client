@@ -38,9 +38,8 @@ function Profile(){
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type="text" disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"}>
-                                    <IoIosCreate className="text-light" size={40}/>
-                                </input>
+                                <input type="text" disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"}/>
+
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputRoll" className="form-label mt-4">Role</label>
