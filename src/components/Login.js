@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
+import Box from '@material-ui/core/Box';
 
 
 function Login(props) {
@@ -28,16 +29,12 @@ function Login(props) {
         <div style={{
             backgroundImage: `url("https://s1.1zoom.me/big0/553/_454805.jpg")`
         }}>
-        <div className="d-flex justify-content-center">
 
-            <link rel="stylesheet" href={require('./Login.css')}/>
-            <div className="col-4">
-                <div className="d-flex flex-column">
-                </div>
-            </div>
-
-            <div className="col-4">
-                <div className="d-flex flex-column">
+            <div className="d-flex justify-content-center">
+                <link rel="stylesheet" href={require('./Login.css')}/>
+                <div className="col-4"/>
+                <div className="col-4">
+                    <div className="d-flex flex-column">
                     <img className="pt-5 mx-auto ml-2" src = {require('../assets/golfMan.png')} alt="Golf Man"/>
                     <form>
                         <fieldset>
@@ -56,16 +53,15 @@ function Login(props) {
                         </fieldset>
                         <div className="mt-4">
                             {incorrect ? <span className="lg-badge bg-danger mt-2" >Incorrect username or password</span> : null}
+
                         </div>
                     </form>
                 </div>
-            </div>
-            <div className="col-4">
-            <div className="d-flex flex-column">
-            </div>
-            </div>
+                </div>
+            <div className="col-4"/>
         </div>
-        </div>
+
+    </div>
     );
 }
 
