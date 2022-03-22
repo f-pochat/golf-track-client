@@ -80,7 +80,7 @@ function AddCourse(props) {
                                     <div className="col-9">
                                         <div className="form-group">
                                             <label htmlFor="exampleFormControlTextarea1">Description</label>
-                                            <textarea className="form-control" id="exampleFormControlTextarea1" rows="3"/>
+                                            <textarea className="form-control" style={{resize: "none"}} id="exampleFormControlTextarea1" rows="3"/>
                                         </div>
                                     </div>
                                 </div>

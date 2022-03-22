@@ -39,7 +39,7 @@ function Login(props) {
                     <form>
                         <fieldset>
                             <div className="form-group">
-                                <label htmlFor="exampleInputUsername1" className="form-label mt-4 ">Username</label>
+                                <label htmlFor="exampleInputUsername1" className="form-label mt-4 text-light">Username</label>
                                 <input type="text" className="form-control" id={"user"}
                                       placeholder="Enter username..." onChange={e => setUser(e.target.value)}/>
                             </div>
@@ -52,7 +52,7 @@ function Login(props) {
                             <button type="submit" className="btn btn-primary" onClick={submitUser}>Enter</button>
                         </fieldset>
                         <div className="mt-4">
-                            {incorrect ? <span className="lg-badge bg-danger mt-2" >Incorrect username or password</span> : null}
+                            {incorrect ? <span className="lg-badge bg-danger mt-2 text-light" >Incorrect username or password</span> : null}
 
                         </div>
                     </form>
