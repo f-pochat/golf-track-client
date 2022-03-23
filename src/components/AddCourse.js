@@ -91,7 +91,7 @@ function AddCourse(props) {
                                 <div className="d-flex justify-content-center">
                                     <div className="col-3 mt-2"/>
                                     <div className="col-6 mt-2">
-                                        <img className="h-100 w-100" src = {require('../assets/index.png')} alt="Mapa"/>
+                                        //Add Map
                                     </div>
                                     <div className="col-3"/>
                                 </div>
