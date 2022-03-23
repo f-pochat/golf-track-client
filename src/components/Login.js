@@ -1,29 +1,51 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import "./Login.css";
+import {gql, useMutation} from "@apollo/client";
 
 
 
 function Login(props) {
+    const LOGIN = gql`
+        mutation AdminLogin($user: String!, $password: String!) {
+            loginAdmin(input: {user: $user, password: $password})
+            {
+                user
+                password
+                role
+            }
+  }`;
 
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
-    const [incorrect, setIncorrect] = useState(false)
+    const [incorrect, setIncorrect] = useState(false);
+
+    const [login,{data, error, loading}] = useMutation(LOGIN);
+
 
     let navigate = useNavigate();
-    const submitUser = (e) => {
-        e.preventDefault();
-        const users = {
-            'User' : user,
-            'Password' : pass,
-        }
-        let path = '/home';
 
-        if (users.User === 'Alejo' && users.Password === 'Salta'){
-            navigate(path);
-            props.parentCallback(true);
-        }else{
+    const submitUser = async(e) => {
+        e.preventDefault();
+        let loginData = await  login({
+                variables: {
+                    user: user,
+                    password: pass,
+                },
+            }
+        ).catch(e => console.log(e));
+
+        if (loginData === undefined) {
             setIncorrect(true);
+        }else{
+
+            const admin = {
+                name: loginData.data.loginAdmin.user,
+                role: loginData.data.loginAdmin.role,
+            }
+
+            navigate('/home');
+            props.parentCallback(admin);
         }
     }
     return (

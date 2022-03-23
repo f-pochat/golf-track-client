@@ -19,10 +19,13 @@ import {Component, Profiler, useState} from "react";
 function App() {
     document.title = 'Golf Track'
 
-    const [userOk, setUserOk] = useState(false)
+    const [user, setUser] = useState({
+        name:'',
+        role:'',
+    })
 
     const userIsOkay = (childData) => {
-        setUserOk(childData)
+        setUser(childData)
     }
 
   return (
