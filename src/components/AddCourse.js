@@ -55,27 +55,27 @@ function AddCourse(props) {
                     <fieldset>
 
                         <div className="form-group w-25 mx-auto">
-                            <label htmlFor="exampleInputUsername1" className="form-label mt-4">Course name</label>
+                            <h2 htmlFor="exampleInputUsername1" className="form-label mt-4">Course name</h2>
                             <input type="text" className="form-control" id={"course"}
                                    placeholder="Enter course name..." onChange={e => setCourse(e.target.value)}/>
                         </div>
 
                         <div className="row mt-5">
-                            <div className="col-7">
+                            <div className="col-6">
                                 <div className="row">
                                     <div className="col-4 mt-2">
-                                        <label htmlFor="exampleFormControlHoles">Holes</label>
+                                        <h2 htmlFor="exampleFormControlHoles">Holes</h2>
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="flexRadioDefault"
-                                                   id="flexRadioDefault1"/>
+                                                   id="9"/>
                                                 <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                      09
                                                 </label>
                                         </div>
                                         <div className="form-check">
-                                            <input className="form-check-input" type="radio" name="flexRadioDefault"
-                                                   id="flexRadioDefault2" checked/>
-                                                <label className="form-check-label" htmlFor="flexRadioDefault2">
+                                            <input className="form-check-input text-secondary" type="radio" name="flexRadioDefault"
+                                                   id="18 " checked/>
+                                                <label className="form-check-label " htmlFor="flexRadioDefault2">
                                                     18
                                                 </label>
                                         </div>
@@ -83,15 +83,22 @@ function AddCourse(props) {
                                     </div>
                                     <div className="col-8">
                                         <div className="form-group">
-                                            <label htmlFor="exampleFormControlTextarea1">Description</label>
+                                            <h2 htmlFor="exampleFormControlTextarea1">Description</h2>
                                             <textarea className="form-control" style={{resize: "none"}} id="exampleFormControlTextarea1" rows="3"/>
                                         </div>
                                     </div>
                                 </div>
+                                <div className="d-flex justify-content-center">
+                                    <div className="col-3 mt-2"/>
+                                    <div className="col-6 mt-2">
+                                        <img className="h-100 w-100" src = {require('../assets/index.png')} alt="Mapa"/>
+                                    </div>
+                                    <div className="col-3"/>
+                                </div>
                             </div>
-                            <div className="col-5">
+                            <div className="col-6">
                                 <div className="form-group w-75 mx-auto">
-                                    <label htmlFor="exampleFormControlTeeBox">Tee Box</label>
+                                    <h2 htmlFor="exampleFormControlTeeBox">Tee Box</h2>
                                     <div className="row">
                                         <div className="col-10">
                                             <input type="text" className="form-control"
@@ -121,7 +128,7 @@ function AddCourse(props) {
                                                             <input style={{alignItems:'center'}} type="color" className="align-middle"/>
                                                         </td>
                                                         <td>{teebox}</td>
-                                                        <td>
+                                                        <td className>
                                                             <input type="number" className="form-control"/>
                                                         </td>
                                                         <td>
@@ -140,6 +147,9 @@ function AddCourse(props) {
                                 </div>
                             </div>
                         </div>
+
+
+
 
                         <button type="submit" className="btn btn-primary fixed-bottom mx-auto w-25 m-2" onClick={submitCourse}>Next</button>
 

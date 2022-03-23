@@ -1,6 +1,7 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import Box from '@material-ui/core/Box';
+import "./Login.css";
+
 
 
 function Login(props) {
@@ -26,11 +27,7 @@ function Login(props) {
         }
     }
     return (
-        <div style={{
-            backgroundImage: `url("https://s1.1zoom.me/big0/553/_454805.jpg")`
-        }}>
-
-            <div className="d-flex justify-content-center">
+        <div className="d-flex justify-content-center">
                 <link rel="stylesheet" href={require('./Login.css')}/>
                 <div className="col-4"/>
                 <div className="col-4">
@@ -60,9 +57,11 @@ function Login(props) {
                 </div>
             <div className="col-4"/>
         </div>
-
-    </div>
     );
 }
 
 export default Login;
+
+/* <div style={{
+            backgroundImage: `url("https://s1.1zoom.me/big0/553/_454805.jpg")`
+        }}>*/

@@ -15,23 +15,6 @@ const customStyles = {
 };
 
 function Home() {
-    let subtitle;
-    const [modalIsOpen, setIsOpen] = useState(false);
-    const [id, setId] = useState(0)
-
-    function openModal(id) {
-        setIsOpen(true);
-        setId(id)
-    }
-
-    function afterOpenModal() {
-        // references are now sync'd and can be accessed.
-        subtitle.style.color = '#f00';
-    }
-
-    function closeModal() {
-        setIsOpen(false);
-    }
 
     const courses = [
         {
@@ -56,8 +39,32 @@ function Home() {
         },
     ]
 
-    function deleteCourse() {
-        console.log("Delete" + id);
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [id, setId] = useState(0)
+    const [courseList, setCourses] = useState(courses);
+
+    function openModal(id) {
+        setIsOpen(true);
+        setId(id)
+    }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f22';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
+
+
+    const popCourse = (id) => {
+        let aux = courses.filter(course => {
+            return course.id !== id;
+        })
+        setCourses(aux);
         closeModal();
     }
 
@@ -74,13 +81,13 @@ function Home() {
                 <h2> Are you sure you want to delete this course?</h2>
                 <div className="d-flex justify-content-end">
                     <button className="btn btn-primary m-3" onClick={closeModal}>Cancel</button>
-                    <button className="btn btn-danger m-3" onClick={deleteCourse}>Delete</button>
+                    <button className="btn btn-danger m-3" onClick={() => popCourse(id)}>Delete</button>
                 </div>
             </Modal>
             <div>
                 {
                     // eslint-disable-next-line array-callback-return
-                    courses.map((course) => {
+                    courseList.map((course) => {
                         return(
                             <div className="card text-white bg-primary m-3 ">
                                 <div className="card-body">

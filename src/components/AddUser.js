@@ -17,7 +17,7 @@ function AddUser(props) {
         }
         let path = '/home';
 
-        if (users.User !== '' && users.Password !== ''){
+        if (users.User === 'Fede' && users.Password === 'Pochat'){
             navigate(path);
             props.parentCallback(true);
         }else{
