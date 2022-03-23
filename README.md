@@ -8,7 +8,7 @@ Download PGAdmin.
 
 Run the scripts
 
-###First make sure you have installed NodeJS
+### First make sure you have installed NodeJS
 
 ### `npm i typescript -g`
 ### `npm i nodemon`
@@ -24,10 +24,10 @@ In the project directory, you can run:
 ### `npm run dev`
 
 Runs the app in the development mode.\
-Open [http://localhost:4000](http://localhost:4000) to view it in your browser.
 
 The page will reload when you make changes.\
 
 Finally, run in this project,
 
 ### `npm start` 
+Open [http://localhost:4000](http://localhost:4000) to view it in your browser.
