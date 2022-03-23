@@ -2,6 +2,7 @@ import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import "./Login.css";
 import {gql, useMutation} from "@apollo/client";
+import {IoIosAddCircleOutline, IoIosEye, IoIosEyeOff} from "react-icons/io";
 
 
 
@@ -19,6 +20,7 @@ function Login(props) {
     const [user, setUser] = useState('');
     const [pass, setPass] = useState('');
     const [incorrect, setIncorrect] = useState(false);
+    const [viewPass, setViewPass] = useState(false);
 
     const [login,{data, error, loading}] = useMutation(LOGIN);
 
@@ -48,6 +50,15 @@ function Login(props) {
             navigate('/home');
         }
     }
+
+    const toggleView = () => {
+        if (viewPass === true){
+            setViewPass(false);
+        }else{
+            setViewPass(true);
+        }
+    }
+
     return (
         <div className="d-flex justify-content-center">
                 <link rel="stylesheet" href={require('./Login.css')}/>
@@ -64,10 +75,15 @@ function Login(props) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4 text-light">Password</label>
-                                <input type="password" className="form-control" id={"password"}
-                                       placeholder="Enter password..." onChange={e => setPass(e.target.value)}/>
-                            </div>
+                                <div className="input-group mt-4">
+                                    <input type={viewPass ? "text" : "password"} className="form-control" id={"password"}
+                                           placeholder="Enter password..." onChange={e => setPass(e.target.value)}/>
+                                    <span className="input-group-append">
+                                         <a className="text-dark" onClick={toggleView}>{viewPass ? <IoIosEyeOff  size={30} className="m-2"/> :<IoIosEye  size={30} className="m-2"/>}</a>
+                                    </span>
+                                </div>
 
+                            </div>
                             <button type="submit" className="btn btn-primary" onClick={submitUser}>Enter</button>
                         </fieldset>
                         <div className="mt-4">

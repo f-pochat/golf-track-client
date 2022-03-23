@@ -41,13 +41,13 @@ function App() {
                     element = {<Login parentCallback = {userEntered} />}/>
 
                 < Route path="/home"
-                       element={getName() === '' ? <Navigate to="/" /> :  <Home user = {getName()} />}/>
+                       element={getName() === '' ? <Navigate to="/" /> :  <Home/>}/>
 
                 <Route path="/profile"
-                       element={getName() === '' ? <Navigate to="/" /> :  <Profile user = {getName()} role = {getRole()} />}/>
+                       element={getName() === '' ? <Navigate to="/" /> :  <Profile/>}/>
 
                 <Route path="/addUser"
-                       element={<AddUser/>}/>
+                       element={(getName() === '' || getRole() === 'Editor') ? <Navigate to="/profile" /> :  <AddUser/>}/>
 
                 <Route path="/addCourse"
                        element={<AddCourse/>}/>

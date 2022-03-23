@@ -1,21 +1,40 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
-import {IoIosCreate} from "react-icons/io";
-//terreno reservado para Chalub Ignacio
+import {gql, useMutation} from "@apollo/client";
 
 function Profile(props){
 
+    const EDIT = gql`
+        mutation AdminEdit($user: String!, $password: String!) {
+            editAdmin(input: {user: $user, password: $password}){
+                user
+            }
+  }`;
+
     const [editMode,setEditMode]=useState(false);
+    const [edit,{data, error, loading}] = useMutation(EDIT);
+    const [pass, setPass] = useState('');
 
     const toggleEditMode = (e) => {
         e.preventDefault();
         setEditMode(true)
     }
 
-    const untoggleEditMode = (e) => {
+    const untoggleEditMode = async(e) => {
         e.preventDefault();
-        setEditMode(false);
-        navigate("/home");
+        let editData = await edit({
+                variables: {
+                    user: localStorage.getItem('Name'),
+                    password: pass,
+                },
+            }
+        ).catch(e => console.log(e))
+
+
+        if (editData !== undefined){
+            setEditMode(false);
+            navigate("/home");
+        }
     }
 
     let navigate = useNavigate();
@@ -26,6 +45,10 @@ function Profile(props){
     const logOut = () => {
         localStorage.clear();
         navigate('/');
+    }
+
+    const changePass = (e) => {
+        setPass(e.target.value);
     }
 
     return(
@@ -43,7 +66,7 @@ function Profile(props){
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type="password" disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"}/>
+                                <input type="password" disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"} onChange={changePass}/>
 
                             </div>
                             <div className="form-group">
