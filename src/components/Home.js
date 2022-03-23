@@ -14,7 +14,7 @@ const customStyles = {
     },
 };
 
-function Home() {
+function Home(props) {
 
     const courses = [
         {
@@ -70,7 +70,7 @@ function Home() {
 
     return (
         <div>
-            <Navbar/>
+            <Navbar user = {props.user} />
             <Modal
                 isOpen={modalIsOpen}
                 onAfterOpen={afterOpenModal}

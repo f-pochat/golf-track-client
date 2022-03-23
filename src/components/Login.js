@@ -44,8 +44,8 @@ function Login(props) {
                 role: loginData.data.loginAdmin.role,
             }
 
-            navigate('/home');
             props.parentCallback(admin);
+            navigate('/home');
         }
     }
     return (

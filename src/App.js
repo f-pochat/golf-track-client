@@ -19,13 +19,17 @@ import {Component, Profiler, useState} from "react";
 function App() {
     document.title = 'Golf Track'
 
-    const [user, setUser] = useState({
-        name:'',
-        role:'',
-    })
+    const userEntered = (childData) => {
+        localStorage.setItem('Name', childData.name);
+        localStorage.setItem('Role', childData.role);
+    }
 
-    const userIsOkay = (childData) => {
-        setUser(childData)
+    const getName = () => {
+        return localStorage.getItem( 'Name' ) || '';
+    }
+
+    const getRole = () => {
+        return localStorage.getItem( 'Role' ) || '';
     }
 
   return (
@@ -34,14 +38,13 @@ function App() {
             <Routes>
                 <Route
                     path = "/"
-                    element = {<Login parentCallback = {userIsOkay} />}/>
+                    element = {<Login parentCallback = {userEntered} />}/>
 
                 < Route path="/home"
-                       //element={userOk ?  <Home/> : <Navigate to="/" />}/>
-                        element={<Home/>} />
+                       element={getName() === '' ? <Navigate to="/" /> :  <Home user = {getName()} />}/>
 
                 <Route path="/profile"
-                       element={<Profile/>}/>
+                       element={getName() === '' ? <Navigate to="/" /> :  <Profile user = {getName()} role = {getRole()} />}/>
 
                 <Route path="/addUser"
                        element={<AddUser/>}/>
