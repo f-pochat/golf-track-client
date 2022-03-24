@@ -1,7 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {gql, useMutation} from "@apollo/client";
-import {IoIosEye, IoIosEyeOff} from "react-icons/io";
+import {IoIosArrowBack, IoIosEye, IoIosEyeOff} from "react-icons/io";
 
 function Profile(props){
 
@@ -99,7 +99,8 @@ function Profile(props){
                                 <button className="btn btn-primary m-2" disabled={localStorage.getItem('Role') === 'Editor'} onClick={goToAddUser}>Add User</button>
                                 <button className="btn btn-primary m-2" disabled={editMode} onClick={toggleEditMode} >Edit Password</button>
                                 <button className="btn btn-primary m-2" disabled={!editMode} onClick={untoggleEditMode}>Save</button>
-                                <button className="btn btn-danger m-2" onClick={logOut}>Log Out</button>
+                                <a href="/home" className="text-dark mr-1"><IoIosArrowBack size={40} className="m-2"/></a>
+                                <button className="btn btn-danger ml-2" onClick={logOut}>Log Out</button>
                             </div>
 
                         </fieldset>
