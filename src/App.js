@@ -1,5 +1,5 @@
 import './App.css';
-import Navbar from "./components/Navbar";
+
 import Login from "./components/Login";
 import Profile from"./components/Profile";
 import AddUser from "./components/AddUser";

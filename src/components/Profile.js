@@ -78,11 +78,16 @@ function Profile(props){
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type={viewPass?"text" : "password"} disabled={!editMode} className="form-control" id={"password"} onChange={changePass}/>
-                            </div>
-                            <span className="input-group-append">
-                                <a className="text-dark" onClick={toggleViewPass}>{viewPass?<IoIosEyeOff size={30} className="mt-2"/>:<IoIosEye size={30} className="mt-2"/>}</a>
+                                <div className="input-group ">
+                                    <input type={viewPass?"text" : "password"} disabled={!editMode} className="form-control" id={"password"} onChange={changePass}/>
+                                     <span className="input-group-append ml-2">
+                                    <a className="text-dark" onClick={toggleViewPass}>{viewPass?<IoIosEyeOff size={30} className="mt-2"/>:<IoIosEye size={30} className="mt-2"/>}</a>
                             </span>
+                                </div>
+
+
+                            </div>
+
                             <div className="form-group">
                                 <label htmlFor="exampleInputRoll" className="form-label mt-4">Role</label>
                                 <input disabled value={localStorage.getItem( 'Role' )} className="form-control"/>
