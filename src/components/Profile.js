@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import {useNavigate} from "react-router-dom";
 import {gql, useMutation} from "@apollo/client";
+import {IoIosEye, IoIosEyeOff} from "react-icons/io";
 
 function Profile(props){
 
@@ -14,6 +15,7 @@ function Profile(props){
     const [editMode,setEditMode]=useState(false);
     const [edit,{data, error, loading}] = useMutation(EDIT);
     const [pass, setPass] = useState('');
+    const [viewPass,setViewPass] = useState(false);
 
     const toggleEditMode = (e) => {
         e.preventDefault();
@@ -51,6 +53,12 @@ function Profile(props){
         setPass(e.target.value);
     }
 
+    const toggleViewPass = () => {
+        if (viewPass)setViewPass(false);
+        else setViewPass(true);
+
+    }
+
     return(
         <div className="d-flex justify-content-center">
             <link rel="stylesheet" href={require('./Login.css')}/>
@@ -66,9 +74,11 @@ function Profile(props){
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type="password" disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"} onChange={changePass}/>
-
+                                <input type={viewPass?"text" : "password"} disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"} onChange={changePass}/>
                             </div>
+                            <span className="input-group-append">
+                                <a className="text-dark" onClick={toggleViewPass}>{viewPass?<IoIosEyeOff size={30} className="mt-2"/>:<IoIosEye size={30} className="mt-2"/>}</a>
+                            </span>
                             <div className="form-group">
                                 <label htmlFor="exampleInputRoll" className="form-label mt-4">Role</label>
                                 <input disabled value={localStorage.getItem( 'Role' )} className="form-control"/>
