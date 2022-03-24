@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {gql, useMutation} from "@apollo/client";
-import {IoIosAddCircleOutline, IoIosArrowBack} from "react-icons/io";
+import {IoIosArrowBack} from "react-icons/io";
+import {IoIosEye, IoIosEyeOff} from "react-icons/io";
 
 
 function AddUser(props) {
@@ -21,6 +22,7 @@ function AddUser(props) {
     const [role, setRole] = useState('');
     const [incorrect, setIncorrect] = useState(false);
     const [message, setMessage] = useState('');
+    const [viewPass,setViewPass] = useState(false);
 
 
     const [addAdmin,{data, error, loading}] = useMutation(ADD);
@@ -53,6 +55,11 @@ function AddUser(props) {
 
     }
 
+    const toggleViewPass =() => {
+        if (viewPass)setViewPass(false);
+        else setViewPass(true);
+    }
+
     const changedRadio = (e) => {
         setRole(e.target.value)
     }
@@ -72,8 +79,14 @@ function AddUser(props) {
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type="password" className="form-control" id={"password"}
-                                       placeholder="Enter admin password..." onChange={e => setPass(e.target.value)}/>
+                                <div className="input-group">
+                                    <input type={!viewPass?"password":"text"} className="form-control" id={"password"}
+                                           placeholder="Enter admin password..." onChange={e => setPass(e.target.value)}/>
+                                    <span className="ml-2">
+                                        <a onClick={toggleViewPass}>{viewPass?<IoIosEyeOff size={30} className="mt-2"/>:<IoIosEye size={30} className="mt-2"/>}</a>
+                                    </span>
+
+                                </div>
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleSelect1" className="form-label mt-4">Admin's role </label>
