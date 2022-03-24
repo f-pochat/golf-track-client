@@ -40,6 +40,7 @@ function AddUser(props) {
                     password: pass,
                     role: role,
                 },
+
             }
         ).catch(e => console.log(e));
 

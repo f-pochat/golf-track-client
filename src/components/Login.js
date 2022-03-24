@@ -11,8 +11,7 @@ function Login(props) {
         mutation AdminLogin($user: String!, $password: String!) {
             loginAdmin(input: {user: $user, password: $password})
             {
-                user
-                password
+                token
                 role
             }
   }`;
@@ -40,9 +39,9 @@ function Login(props) {
         if (loginData === undefined) {
             setIncorrect(true);
         }else{
-
+            localStorage.setItem('TOKEN', loginData.data.loginAdmin.token);
             const admin = {
-                name: loginData.data.loginAdmin.user,
+                name: user,
                 role: loginData.data.loginAdmin.role,
             }
 

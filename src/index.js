@@ -10,6 +10,7 @@ const client = new ApolloClient({
     cache: new InMemoryCache(),
     headers: {
         "Allow-Control-Allow-Origin":"True",
+        "Authorization": "Bearer " + localStorage.getItem('TOKEN'),
     }
 });
 
