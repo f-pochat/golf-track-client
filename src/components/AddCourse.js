@@ -91,7 +91,6 @@ function AddCourse(props) {
                                 <div className="d-flex justify-content-center">
                                     <div className="col-3 mt-2"/>
                                     <div className="col-6 mt-2">
-                                        //Add Map
                                     </div>
                                     <div className="col-3"/>
                                 </div>
