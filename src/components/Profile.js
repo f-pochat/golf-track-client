@@ -16,6 +16,8 @@ function Profile(props){
     const [edit,{data, error, loading}] = useMutation(EDIT);
     const [pass, setPass] = useState('');
     const [viewPass,setViewPass] = useState(false);
+    const [incorrect, setIncorrect] = useState(false);
+    const [message, setMessage] = useState('');
 
     const toggleEditMode = (e) => {
         e.preventDefault();
@@ -30,12 +32,14 @@ function Profile(props){
                     password: pass,
                 },
             }
-        ).catch(e => console.log(e))
+        ).catch(e => setMessage(e.message))
 
 
         if (editData !== undefined){
             setEditMode(false);
             navigate("/home");
+        }else{
+            setIncorrect(true);
         }
     }
 
@@ -74,7 +78,7 @@ function Profile(props){
                             </div>
                             <div className="form-group">
                                 <label htmlFor="exampleInputPassword1" className="form-label mt-4">Password</label>
-                                <input type={viewPass?"text" : "password"} disabled={!editMode} className="form-control" id={"password"} defaultValue={"Salta"} onChange={changePass}/>
+                                <input type={viewPass?"text" : "password"} disabled={!editMode} className="form-control" id={"password"} onChange={changePass}/>
                             </div>
                             <span className="input-group-append">
                                 <a className="text-dark" onClick={toggleViewPass}>{viewPass?<IoIosEyeOff size={30} className="mt-2"/>:<IoIosEye size={30} className="mt-2"/>}</a>
@@ -82,6 +86,9 @@ function Profile(props){
                             <div className="form-group">
                                 <label htmlFor="exampleInputRoll" className="form-label mt-4">Role</label>
                                 <input disabled value={localStorage.getItem( 'Role' )} className="form-control"/>
+                            </div>
+                            <div className="mt-4">
+                                {incorrect ? <span className="lg-badge bg-danger mt-2 text-light" > {message} </span> : null}
                             </div>
                             <div className="flex-row">
                                 <button className="btn btn-primary m-2" disabled={localStorage.getItem('Role') === 'Editor'} onClick={goToAddUser}>Add User</button>

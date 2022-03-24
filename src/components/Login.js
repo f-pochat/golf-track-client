@@ -21,7 +21,7 @@ function Login(props) {
     const [incorrect, setIncorrect] = useState(false);
     const [viewPass, setViewPass] = useState(false);
 
-    const [login,{data, error, loading}] = useMutation(LOGIN);
+    const [login] = useMutation(LOGIN);
 
 
     let navigate = useNavigate();
@@ -39,10 +39,10 @@ function Login(props) {
         if (loginData === undefined) {
             setIncorrect(true);
         }else{
-            localStorage.setItem('TOKEN', loginData.data.loginAdmin.token);
+            localStorage.setItem('TOKEN', loginData.data["loginAdmin"].token);
             const admin = {
                 name: user,
-                role: loginData.data.loginAdmin.role,
+                role: loginData.data["loginAdmin"].role,
             }
 
             props.parentCallback(admin);
@@ -83,6 +83,7 @@ function Login(props) {
                                     <input type={viewPass ? "text" : "password"} className="form-control" id={"password"}
                                            placeholder="Enter password..." onChange={e => setPass(e.target.value)}/>
                                     <span className="input-group-append">
+                                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                          <a className="text-dark" onClick={toggleView}>{viewPass?<IoIosEyeOff className="mt-2" size={30}/>:<IoIosEye className="mt-2" size={30}/>}</a>
                                     </span>
                                 </div>

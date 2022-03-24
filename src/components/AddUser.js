@@ -19,7 +19,8 @@ function AddUser(props) {
     const [user,setUser] = useState('');
     const [pass,setPass] = useState('');
     const [role, setRole] = useState('');
-    const [incorrect, setIncorrect] = useState(false)
+    const [incorrect, setIncorrect] = useState(false);
+    const [message, setMessage] = useState('');
 
 
     const [addAdmin,{data, error, loading}] = useMutation(ADD);
@@ -42,7 +43,7 @@ function AddUser(props) {
                 },
 
             }
-        ).catch(e => console.log(e));
+        ).catch(e => setMessage(e.message));
 
         if (addedData === undefined) {
             setIncorrect(true);
@@ -91,7 +92,7 @@ function AddUser(props) {
                                     </label>
                                 </div>
                                 <div className="mt-4">
-                                    {incorrect ? <span className="lg-badge bg-danger mt-2 text-light" >Username already exists or data is invalid</span> : null}
+                                    {incorrect ? <span className="lg-badge bg-danger mt-2 text-light" > {message} </span> : null}
                                 </div>
                             </div>
 
