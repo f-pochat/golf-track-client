@@ -87,7 +87,6 @@ function Login(props) {
                                          <a className="text-dark" onClick={toggleView}>{viewPass?<IoIosEyeOff className="mt-2" size={30}/>:<IoIosEye className="mt-2" size={30}/>}</a>
                                     </span>
                                 </div>
-
                             </div>
                             <button type="submit" className="btn btn-primary" onClick={submitUser}>Enter</button>
                         </fieldset>

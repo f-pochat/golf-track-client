@@ -29,7 +29,7 @@ function AddCourse(props) {
     }
 //agregar al array de tees
     const pushTeeBox = () => {
-        if (teeboxes.includes(tempTeeBox) || tempTeeBox==='') return;
+        if (teeboxes.includes(tempTeeBox) || tempTeeBox==='' || teeboxes.length >= 6) return;
         let aux = teeboxes.concat(tempTeeBox)
         setTeeBoxes(aux);
         setTempTeeBox('');
@@ -63,13 +63,13 @@ function AddCourse(props) {
                         <div className="row mt-5">
                             <div className="col-6">
                                 <div className="row">
-                                    <div className="col-4 mt-2">
+                                    <div className="col-4 mt-2 justify-content-start">
                                         <h2 htmlFor="exampleFormControlHoles">Holes</h2>
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="flexRadioDefault"
                                                    id="9"/>
                                                 <label className="form-check-label" htmlFor="flexRadioDefault1">
-                                                     09
+                                                     9
                                                 </label>
                                         </div>
                                         <div className="form-check">
