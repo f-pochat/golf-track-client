@@ -98,7 +98,7 @@ function Home(props) {
                                         <div className="col-3"/>
                                         <div className="col-3"/>
                                         <div className="col-3">
-                                            <a href={`/edit/${course.id}`}><IoIosCreate className="text-light" size={40}/></a> <a href="#" onClick={() => openModal(course.id)}><IoIosTrash className="text-danger ml-3" size={40}/></a>
+                                            <a href={`/addCourse`}><IoIosCreate className="text-light" size={40}/></a> <a href="#" onClick={() => openModal(course.id)}><IoIosTrash className="text-danger ml-3" size={40}/></a>
                                         </div>
                                     </div>
                                 </div>

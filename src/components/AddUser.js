@@ -109,7 +109,7 @@ function AddUser(props) {
                                 </div>
                             </div>
 
-                            <a href="/home" className="text-dark mr-5"><IoIosArrowBack size={40} className="m-2"/></a>
+                            <a href="/profile" className="text-dark mr-5"><IoIosArrowBack size={40} className="m-2"/></a>
                             <button type="submit" className="btn btn-primary"  onClick={createAdmin}>Create admin</button>
                         </fieldset>
                     </form>
