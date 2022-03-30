@@ -91,6 +91,8 @@ function AddCourse(props) {
                                 <div className="d-flex justify-content-center">
                                     <div className="col-3 mt-2"/>
                                     <div className="col-6 mt-2">
+                                        <h2 htmlFor="exampleFormControlTeeBox">Mark Club House</h2>
+                                        <MapContainer/>
                                     </div>
                                     <div className="col-3"/>
                                 </div>
