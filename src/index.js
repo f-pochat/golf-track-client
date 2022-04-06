@@ -4,8 +4,10 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
 
+
+
 const client = new ApolloClient({
-    uri: "http://127.0.0.1:4000/",
+    uri: "http://127.0.0.1:4000/admin",
     cache: new InMemoryCache(),
     headers: {
         "Allow-Control-Allow-Origin":"True",

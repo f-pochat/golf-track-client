@@ -1,6 +1,6 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import MapContainer from "./MapContainer";
+import MapContainer from "./map/AddClubMapContainer";
 import {IoIosCheckmark, IoIosCreate, IoIosTrash} from "react-icons/io";
 
 
@@ -14,13 +14,8 @@ function AddCourse(props) {
     let navigate = useNavigate();
     const submitCourse = (e) => {
         e.preventDefault();
-
-        /*
-        const users = {
-            'Court' : court,
-            'Location' : location,
-        }*/
-        let path = '/home';
+        props.parentCallback(teeboxes);
+        let path = '/addCourse/1';
         navigate(path);
     }
 
@@ -90,8 +85,8 @@ function AddCourse(props) {
                                 </div>
                                 <div className="d-flex justify-content-center">
                                     <div className="col-3 mt-2"/>
-                                    <div className="col-6 mt-2">
-                                        <h2 htmlFor="exampleFormControlTeeBox">Mark Club House</h2>
+                                    <div className="col-6 mt-5">
+                                        <h4 htmlFor="exampleFormControlTeeBox">Mark Club House</h4>
                                         <MapContainer/>
                                     </div>
                                     <div className="col-3"/>
@@ -136,7 +131,9 @@ function AddCourse(props) {
                                                             <input type="number" className="form-control"/>
                                                         </td>
                                                         <td>
-                                                            <a href="#" onClick={() => {popTeeBox(teebox)}}><IoIosTrash className="text-danger ml-3" size={40}/></a>
+                                                            <a href="#" onClick={() => {
+                                                                popTeeBox(teebox)}
+                                                            }><IoIosTrash className="text-danger ml-3" size={40}/></a>
                                                         </td>
                                                     </tr>
                                                 )
@@ -148,9 +145,6 @@ function AddCourse(props) {
                                 </div>
                             </div>
                         </div>
-
-
-
 
                         <button type="submit" className="btn btn-primary fixed-bottom mx-auto w-25 m-2" onClick={submitCourse}>Next</button>
 

@@ -12,12 +12,14 @@ import {
     Link, Navigate
 } from 'react-router-dom';
 import Home from "./components/Home";
-import {Component, Profiler, useState} from "react";
+import {Component, Profiler, useEffect, useState} from "react";
+import AddHole from "./components/AddHole";
 
 
 
 function App() {
-    document.title = 'Golf Track'
+    const [teeboxes, setTeeboxes] = useState([]);
+    document.title = 'Golf Track';
 
     const userEntered = (childData) => {
         localStorage.setItem('Name', childData.name);
@@ -30,6 +32,10 @@ function App() {
 
     const getRole = () => {
         return localStorage.getItem( 'Role' ) || '';
+    }
+
+    const teeboxesData = (childData) => {
+        setTeeboxes(childData);
     }
 
   return (
@@ -50,8 +56,8 @@ function App() {
                        element={(getName() === '' || getRole() === 'Editor') ? <Navigate to="/profile" /> :  <AddUser/>}/>
 
                 <Route path="/addCourse"
-                       element={<AddCourse/>}/>
-
+                       element={<AddCourse parentCallback = {teeboxesData}/>}/>
+                <Route path="/addCourse/:number" element={<AddHole teeboxes = {teeboxes}/>}/>
             </Routes>
         </Router>
     </div>

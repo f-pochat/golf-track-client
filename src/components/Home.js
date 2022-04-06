@@ -92,13 +92,13 @@ function Home(props) {
                             <div className="card text-white bg-primary m-3 ">
                                 <div className="card-body">
                                     <div className="d-flex flex-row">
-                                        <div className="col-3">
+                                        <div className="col-md-3 col-7">
                                             <h4 className="text-light pt-2">{course.name}</h4>
                                         </div>
-                                        <div className="col-3"/>
-                                        <div className="col-3"/>
-                                        <div className="col-3">
-                                            <a href={`/addCourse`}><IoIosCreate className="text-light" size={40}/></a> <a href="#" onClick={() => openModal(course.id)}><IoIosTrash className="text-danger ml-3" size={40}/></a>
+                                        <div className="col-md-3"/>
+                                        <div className="col-md-3"/>
+                                        <div className="col-md-3 col-5">
+                                            <a href={`/addCourse`}><IoIosCreate className="text-light" size={40}/></a> <a href="#" onClick={() => openModal(course.id)}><IoIosTrash className="text-danger ml-md-3 ml-1" size={40}/></a>
                                         </div>
                                     </div>
                                 </div>

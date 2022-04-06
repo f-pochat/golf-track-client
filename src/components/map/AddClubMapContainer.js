@@ -1,5 +1,6 @@
 import React,{useState,useCallback} from 'react'
 import {GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
+import env from "react-dotenv";
 
 const containerStyle = {
     width: '400px',
@@ -11,10 +12,10 @@ const center = {
     lng: -58.37723
 };
 
-function MapContainer() {
+function AddClubMapContainer() {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
-        googleMapsApiKey: ""
+        googleMapsApiKey: env.MAPS_KEY
     })
 
     const [map, setMap] = useState(null);
@@ -54,4 +55,4 @@ function MapContainer() {
     ) : <></>
 }
 
-export default React.memo(MapContainer);
+export default React.memo(AddClubMapContainer);
