@@ -5,7 +5,7 @@ import { faMapPin,faCircleDot } from "@fortawesome/free-solid-svg-icons";
 
 const containerStyle = {
     width: '400px',
-    height: '350px'
+    height: '300px'
 };
 
 export function AddHoleMapContainer(props) {
@@ -17,8 +17,8 @@ export function AddHoleMapContainer(props) {
     const [map, setMap] = useState(null);
 
     const [marker,setMarker] = useState({
-        lat: -35,
-        lng: -58,
+        lat: 0,
+        lng: 0,
     })
 
     const [center, setCenter] = useState({
@@ -38,33 +38,33 @@ export function AddHoleMapContainer(props) {
 
     const pinMarker = {
         path: props.icon.icon[4],
-        fillColor: "#fff",
+        fillColor: props.pinColor,
         fillOpacity: 1,
         // eslint-disable-next-line no-undef
         anchor: new google.maps.Point(
             faMapPin.icon[0] / 2, // width
             faMapPin.icon[1] // height
         ),
-        strokeWeight: 1,
-        strokeColor: "#ffffff",
         scale: 0.075,
     };
 
     return isLoaded ? (
         <GoogleMap
             onClick={ev => {
-                setCenter({
-                    lat:ev.latLng.lat(),
-                    lng:ev.latLng.lng(),
-                });
                 setMarker({
                     lat:ev.latLng.lat(),
                     lng:ev.latLng.lng(),
                 });
+
+                props.parentCallback(
+                    {
+                        lat: ev.latLng.lat(),
+                        lng: ev.latLng.lng(),
+                    }
+                );
             }}
             mapTypeId='satellite'
             mapContainerStyle={containerStyle}
-            center={center}
             zoom={10}
             onLoad={onLoad}
             onUnmount={onUnmount}

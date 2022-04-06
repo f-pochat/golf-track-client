@@ -1,9 +1,11 @@
 import './App.css';
 
-import Login from "./components/Login";
+import Login from "./components/login/Login";
 import Profile from"./components/Profile";
 import AddUser from "./components/AddUser";
 import AddCourse from "./components/AddCourse";
+
+import {isMobile} from 'react-device-detect';
 
 import {
     BrowserRouter as Router,
@@ -11,14 +13,15 @@ import {
     Route,
     Link, Navigate
 } from 'react-router-dom';
-import Home from "./components/Home";
+import Home from "./components/home/Home";
 import {Component, Profiler, useEffect, useState} from "react";
 import AddHole from "./components/AddHole";
+import ErrorPage from "./components/ErrorPage";
 
 
 
 function App() {
-    const [teeboxes, setTeeboxes] = useState([]);
+    const [course, setCourse] = useState();
     document.title = 'Golf Track';
 
     const userEntered = (childData) => {
@@ -34,8 +37,8 @@ function App() {
         return localStorage.getItem( 'Role' ) || '';
     }
 
-    const teeboxesData = (childData) => {
-        setTeeboxes(childData);
+    const courseData = (childData) => {
+        setCourse(childData);
     }
 
   return (
@@ -56,8 +59,8 @@ function App() {
                        element={(getName() === '' || getRole() === 'Editor') ? <Navigate to="/profile" /> :  <AddUser/>}/>
 
                 <Route path="/addCourse"
-                       element={<AddCourse parentCallback = {teeboxesData}/>}/>
-                <Route path="/addCourse/:number" element={<AddHole teeboxes = {teeboxes}/>}/>
+                       element={isMobile? <ErrorPage /> : <AddCourse parentCallback = {courseData}/>}/>
+                <Route path="/addCourse/:number" element={isMobile? <ErrorPage /> : <AddHole course = {course}/>}/>
             </Routes>
         </Router>
     </div>

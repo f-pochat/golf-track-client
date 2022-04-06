@@ -1,7 +1,8 @@
 import React, {useState} from 'react';
-import Navbar from "./Navbar";
-import {IoIosCreate, IoIosTrash} from "react-icons/io";
+import Navbar from "../Navbar";
+import {IoIosCreate, IoIosEye, IoIosEyeOff, IoIosSearch, IoIosTrash} from "react-icons/io";
 import Modal from 'react-modal';
+import './Home.css';
 
 const customStyles = {
     content: {
@@ -68,6 +69,14 @@ function Home(props) {
         closeModal();
     }
 
+    const searchCourses = (val) => {
+        let aux = courses.filter(course => {
+            console.log(val);
+            return course.name.toLowerCase().includes(val.toLowerCase());
+        })
+        setCourses(aux);
+    }
+
     return (
         <div>
             <Navbar user = {props.user} />
@@ -85,6 +94,15 @@ function Home(props) {
                 </div>
             </Modal>
             <div>
+                <div className="input-group mt-2 w-75 mx-auto">
+                    <input type="text" className="form-control"
+                           placeholder="Search..." onChange={e => searchCourses(e.target.value)}/>
+                    <span className="input-group-append ml-2">
+                        <IoIosSearch className="mt-2" size={30}/>
+                    </span>
+                </div>
+            </div>
+            <div>
                 {
                     // eslint-disable-next-line array-callback-return
                     courseList.map((course) => {
@@ -92,13 +110,11 @@ function Home(props) {
                             <div className="card text-white bg-primary m-3 ">
                                 <div className="card-body">
                                     <div className="d-flex flex-row">
-                                        <div className="col-md-3 col-7">
-                                            <h4 className="text-light pt-2">{course.name}</h4>
+                                        <div className="p-0 col-md-7 col-7">
+                                            <h4 className="text-light pt-2 break-word">{course.name}</h4>
                                         </div>
-                                        <div className="col-md-3"/>
-                                        <div className="col-md-3"/>
-                                        <div className="col-md-3 col-5">
-                                            <a href={`/addCourse`}><IoIosCreate className="text-light" size={40}/></a> <a href="#" onClick={() => openModal(course.id)}><IoIosTrash className="text-danger ml-md-3 ml-1" size={40}/></a>
+                                        <div className="col-md-5 col-5">
+                                            <a href="#" onClick={() => openModal(course.id)}><IoIosTrash className="text-danger" size={40}/></a>
                                         </div>
                                     </div>
                                 </div>

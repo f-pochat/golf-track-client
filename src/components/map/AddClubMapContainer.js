@@ -2,9 +2,17 @@ import React,{useState,useCallback} from 'react'
 import {GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 import env from "react-dotenv";
 
+function getWindowDimensions() {
+    const { innerWidth: width, innerHeight: height } = window;
+    return {
+        width,
+        height
+    };
+}
+
 const containerStyle = {
-    width: '400px',
-    height: '350px'
+    width: getWindowDimensions().width/3,
+    height: getWindowDimensions().height/2,
 };
 
 const center = {
@@ -12,7 +20,7 @@ const center = {
     lng: -58.37723
 };
 
-function AddClubMapContainer() {
+function AddClubMapContainer(props) {
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: env.MAPS_KEY
@@ -20,8 +28,8 @@ function AddClubMapContainer() {
 
     const [map, setMap] = useState(null);
     const [marker,setMarker] = useState({
-        lat: 0,
-        lng: 0,
+        lat:0,
+        lng:0,
     })
 
     const onLoad = useCallback(function callback(map) {
@@ -38,9 +46,16 @@ function AddClubMapContainer() {
         <GoogleMap
             onClick={ev => {
                 setMarker({
-                    lat:ev.latLng.lat(),
-                    lng:ev.latLng.lng(),
+                    lat: ev.latLng.lat(),
+                    lng: ev.latLng.lng(),
                 })
+
+                props.parentCallback(
+                    {
+                        lat: ev.latLng.lat(),
+                        lng: ev.latLng.lng(),
+                    }
+                );
             }}
             mapTypeId='satellite'
             mapContainerStyle={containerStyle}

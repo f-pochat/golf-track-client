@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import "./Login.css";
 import {gql, useMutation} from "@apollo/client";
 import {IoIosEye, IoIosEyeOff} from "react-icons/io";
-import golfMan from '../assets/golfMan.png';
+import golfMan from '../../assets/golfMan.png';
 
 
 
@@ -63,8 +63,8 @@ function Login(props) {
     return (
                 <div className="d-flex justify-content-center">
                     <link rel="stylesheet" href={require('./Login.css')}/>
-                    <div className="col-md-4 col-12 "/>
-                    <div className="col-md-4 col-12 ">
+                    <div className="col-md-4 col-1 "/>
+                    <div className="col-md-4 col-10 ">
                         <div className="d-flex flex-column">
                             <div className="mt-4">
                                 {incorrect ? <span className="lg-badge bg-danger mt-2 text-light">Incorrect username or password</span> : null}
@@ -87,7 +87,7 @@ function Login(props) {
                                                    id={"password"}
                                                    placeholder="Enter password..."
                                                    onChange={e => setPass(e.target.value)}/>
-                                            <span className="input-group-append">
+                                            <span className="input-group-append ml-2">
                                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                                 <a className="text-dark" onClick={toggleView}>{viewPass ?
                                                     <IoIosEyeOff className="mt-2" size={30}/> :
@@ -102,7 +102,7 @@ function Login(props) {
                             </form>
                         </div>
                     </div>
-                    <div className="col-md-4 col-12"/>
+                    <div className="col-md-4 col-1"/>
                 </div>
     );
 }

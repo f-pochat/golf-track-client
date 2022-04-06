@@ -65,9 +65,9 @@ function Profile(props){
 
     return(
         <div className="d-flex justify-content-center">
-            <link rel="stylesheet" href={require('./Login.css')}/>
-            <div className="col-4"/>
-            <div className="col-4">
+            <link rel="stylesheet" href={require('./login/Login.css')}/>
+            <div className="col-md-4 col-1"/>
+            <div className="col-md-4 col-10">
                 <div className="d-flex flex-column">
                     <form>
                         <fieldset>
@@ -96,10 +96,10 @@ function Profile(props){
                                 {incorrect ? <span className="lg-badge bg-danger mt-2 text-light" > {message} </span> : null}
                             </div>
                             <div className="flex-row">
+                                <a href="/home" className="text-dark mr-1"><IoIosArrowBack size={40} className="m-2"/></a>
                                 <button className="btn btn-primary m-2" disabled={localStorage.getItem('Role') === 'Editor'} onClick={goToAddUser}>Add User</button>
                                 <button className="btn btn-primary m-2" disabled={editMode} onClick={toggleEditMode} >Edit Password</button>
                                 <button className="btn btn-primary m-2" disabled={!editMode} onClick={untoggleEditMode}>Save</button>
-                                <a href="/home" className="text-dark mr-1"><IoIosArrowBack size={40} className="m-2"/></a>
                                 <button className="btn btn-danger ml-2" onClick={logOut}>Log Out</button>
                             </div>
 
@@ -107,7 +107,7 @@ function Profile(props){
                     </form>
                 </div>
             </div>
-            <div className="col-4"/>
+            <div className="col-md-4 col-1"/>
         </div>
     );
 }
