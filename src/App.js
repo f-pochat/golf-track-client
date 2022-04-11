@@ -11,10 +11,10 @@ import {
     BrowserRouter as Router,
     Routes,
     Route,
-    Link, Navigate
+    Navigate
 } from 'react-router-dom';
 import Home from "./components/home/Home";
-import {Component, Profiler, useEffect, useState} from "react";
+import {useState} from "react";
 import AddHole from "./components/add-course/AddHole";
 import ErrorPage from "./components/utils/ErrorPage";
 

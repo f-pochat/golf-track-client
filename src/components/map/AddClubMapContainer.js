@@ -1,4 +1,4 @@
-import React,{useState,useCallback} from 'react'
+import React, {useCallback, useState} from 'react'
 import {GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 import env from "react-dotenv";
 
@@ -26,6 +26,7 @@ function AddClubMapContainer(props) {
         googleMapsApiKey: env.MAPS_KEY
     })
 
+    // eslint-disable-next-line no-unused-vars
     const [map, setMap] = useState(null);
     const [marker,setMarker] = useState({
         lat:0,

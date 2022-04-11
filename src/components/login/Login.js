@@ -1,10 +1,9 @@
-import React, {useEffect, useState} from 'react';
+import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import "./Login.css";
 import {gql, useMutation} from "@apollo/client";
 import {IoIosEye, IoIosEyeOff} from "react-icons/io";
 import golfMan from '../../assets/golfMan.png';
-
 
 
 function Login(props) {

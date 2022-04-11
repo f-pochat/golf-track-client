@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useRef, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import AddHoleForm from "./AddHoleForm";
 import {AddHoleMapContainer} from "../map/AddHoleMapContainer";

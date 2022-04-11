@@ -1,10 +1,8 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import MapContainer from "../map/AddClubMapContainer";
-import {IoIosCheckmark, IoIosCreate, IoIosTrash} from "react-icons/io";
-import {Course} from "../../models/Course";
 import AddClubMapContainer from "../map/AddClubMapContainer";
-import {gql, useMutation} from "@apollo/client";
+import {IoIosCheckmark, IoIosTrash} from "react-icons/io";
+import {Course} from "../../models/Course";
 import {Teebox} from "../../models/Teebox";
 
 

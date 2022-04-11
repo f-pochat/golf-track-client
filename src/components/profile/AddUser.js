@@ -1,11 +1,10 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import {gql, useMutation} from "@apollo/client";
-import {IoIosArrowBack} from "react-icons/io";
-import {IoIosEye, IoIosEyeOff} from "react-icons/io";
+import {IoIosArrowBack, IoIosEye, IoIosEyeOff} from "react-icons/io";
 
 
-function AddUser(props) {
+function AddUser() {
 
     const ADD = gql`
         mutation AddAdmin($user: String!, $password: String!, $role: String!) {
@@ -25,17 +24,12 @@ function AddUser(props) {
     const [viewPass,setViewPass] = useState(false);
 
 
-    const [addAdmin,{data, error, loading}] = useMutation(ADD);
+    const [addAdmin] = useMutation(ADD);
 
     let navigate = useNavigate();
 
     const createAdmin = async(e) => {
         e.preventDefault();
-        const users = {
-            'User' : user,
-            'Password' : pass,
-            'Role': role,
-        }
 
         let addedData = await  addAdmin({
                 variables: {
@@ -83,6 +77,7 @@ function AddUser(props) {
                                     <input type={!viewPass?"password":"text"} className="form-control" id={"password"}
                                            placeholder="Enter admin password..." onChange={e => setPass(e.target.value)}/>
                                     <span className="ml-2">
+                                        {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                         <a onClick={toggleViewPass}>{viewPass?<IoIosEyeOff size={30} className="mt-2"/>:<IoIosEye size={30} className="mt-2"/>}</a>
                                     </span>
 
@@ -109,7 +104,7 @@ function AddUser(props) {
                                 </div>
                             </div>
 
-                            <a href="/profile" className="text-dark mr-5"><IoIosArrowBack size={40} className="m-2"/></a>
+                            <a href={"/profile"} className="text-dark mr-5"><IoIosArrowBack size={40} className="m-2"/></a>
                             <button type="submit" className="btn btn-primary"  onClick={createAdmin}>Create admin</button>
                         </fieldset>
                     </form>

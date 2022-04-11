@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import Navbar from "../utils/Navbar";
-import {IoIosCreate, IoIosEye, IoIosEyeOff, IoIosSearch, IoIosTrash} from "react-icons/io";
+import {IoIosSearch, IoIosTrash} from "react-icons/io";
 import Modal from 'react-modal';
 import './Home.css';
-import {gql, useLazyQuery, useMutation, useQuery} from '@apollo/client';
+import {gql, useLazyQuery, useMutation} from '@apollo/client';
 
 const customStyles = {
     content: {
@@ -40,7 +40,7 @@ function Home(props) {
     const [courseList, setCourses] = useState([]);
 
     //const [courseList, setCourses] = useState([]);
-    const [getCourseList, {loading, error, data}] = useLazyQuery(COURSES,
+    const [getCourseList, {loading,  data}] = useLazyQuery(COURSES,
         {
             onCompleted: res => setCourses(res.getCourses),
         });
@@ -127,6 +127,7 @@ function Home(props) {
                                         <div className="col-md-5 col-5">
                                             {
                                                 (localStorage.getItem('Name') === course.creator || localStorage.getItem('Role') === 'Admin') ?
+                                                    // eslint-disable-next-line jsx-a11y/anchor-is-valid
                                                     <a href="#" onClick={() => openModal(course.id)}><IoIosTrash
                                                         className="text-danger" size={40}/></a>
                                                     : null

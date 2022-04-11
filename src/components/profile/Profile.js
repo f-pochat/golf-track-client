@@ -3,7 +3,7 @@ import {useNavigate} from "react-router-dom";
 import {gql, useMutation} from "@apollo/client";
 import {IoIosArrowBack, IoIosEye, IoIosEyeOff} from "react-icons/io";
 
-function Profile(props){
+function Profile(){
 
     const EDIT = gql`
         mutation AdminEdit($user: String!, $password: String!) {
@@ -13,7 +13,7 @@ function Profile(props){
   }`;
 
     const [editMode,setEditMode]=useState(false);
-    const [edit,{data, error, loading}] = useMutation(EDIT);
+    const [edit] = useMutation(EDIT);
     const [pass, setPass] = useState('');
     const [viewPass,setViewPass] = useState(false);
     const [incorrect, setIncorrect] = useState(false);
@@ -81,6 +81,7 @@ function Profile(props){
                                 <div className="input-group ">
                                     <input type={viewPass?"text" : "password"} disabled={!editMode} className="form-control" id={"password"} onChange={changePass}/>
                                      <span className="input-group-append ml-2">
+                                         {/* eslint-disable-next-line jsx-a11y/anchor-is-valid */}
                                     <a className="text-dark" onClick={toggleViewPass}>{viewPass?<IoIosEyeOff size={30} className="mt-2"/>:<IoIosEye size={30} className="mt-2"/>}</a>
                             </span>
                                 </div>
@@ -96,7 +97,7 @@ function Profile(props){
                                 {incorrect ? <span className="lg-badge bg-danger mt-2 text-light" > {message} </span> : null}
                             </div>
                             <div className="flex-row">
-                                <a href="/home" className="text-dark mr-1"><IoIosArrowBack size={40} className="m-2"/></a>
+                                <a href={"/home"} className="text-dark mr-1"><IoIosArrowBack size={40} className="m-2"/></a>
                                 <button className="btn btn-primary m-2" disabled={localStorage.getItem('Role') === 'Editor'} onClick={goToAddUser}>Add User</button>
                                 <button className="btn btn-primary m-2" disabled={editMode} onClick={toggleEditMode} >Edit Password</button>
                                 <button className="btn btn-primary m-2" disabled={!editMode} onClick={untoggleEditMode}>Save</button>

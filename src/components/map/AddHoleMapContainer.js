@@ -1,7 +1,7 @@
-import React, {useState, useCallback, useEffect} from 'react'
+import React, {useCallback, useState} from 'react'
 import {GoogleMap, Marker, useJsApiLoader} from '@react-google-maps/api';
 import env from "react-dotenv";
-import { faMapPin,faCircleDot } from "@fortawesome/free-solid-svg-icons";
+import {faMapPin} from "@fortawesome/free-solid-svg-icons";
 
 const containerStyle = {
     width: '400px',
@@ -14,6 +14,7 @@ export function AddHoleMapContainer(props) {
         googleMapsApiKey: env.MAPS_KEY
     })
 
+    // eslint-disable-next-line no-unused-vars
     const [map, setMap] = useState(null);
 
     const [marker,setMarker] = useState({
@@ -21,10 +22,10 @@ export function AddHoleMapContainer(props) {
         lng: 0,
     })
 
-    const [center, setCenter] = useState({
+    /*const [center, setCenter] = useState({
         lat:-35,
         lng:-58,
-    })
+    })*/
 
     const onLoad = useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds();
