@@ -1,9 +1,9 @@
 import './App.css';
 
 import Login from "./components/login/Login";
-import Profile from"./components/Profile";
-import AddUser from "./components/AddUser";
-import AddCourse from "./components/AddCourse";
+import Profile from "./components/profile/Profile";
+import AddUser from "./components/profile/AddUser";
+import AddCourse from "./components/add-course/AddCourse";
 
 import {isMobile} from 'react-device-detect';
 
@@ -15,14 +15,15 @@ import {
 } from 'react-router-dom';
 import Home from "./components/home/Home";
 import {Component, Profiler, useEffect, useState} from "react";
-import AddHole from "./components/AddHole";
-import ErrorPage from "./components/ErrorPage";
+import AddHole from "./components/add-course/AddHole";
+import ErrorPage from "./components/utils/ErrorPage";
 
 
 
 function App() {
     const [course, setCourse] = useState();
     document.title = 'Golf Track';
+    localStorage.setItem('uri','admin')
 
     const userEntered = (childData) => {
         localStorage.setItem('Name', childData.name);

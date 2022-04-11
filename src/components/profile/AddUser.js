@@ -66,7 +66,7 @@ function AddUser(props) {
 
     return (
         <div className="d-flex justify-content-center">
-            <link rel="stylesheet" href={require('./login/Login.css')}/>
+            <link rel="stylesheet" href={require('../login/Login.css')}/>
             <div className="col-md-4 col-1"/>
             <div className="col-md-4 col-10">
                 <div className="d-flex flex-column">

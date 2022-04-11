@@ -5,10 +5,11 @@ export class Hole{
     teebox = [];
 
 
-    constructor(num, locationMidOfGreen, locationMidOfFw) {
+    constructor(num, locationMidOfGreen, locationMidOfFw,teeboxes) {
         this.num = num;
         this.locationMidOfGreen = locationMidOfGreen;
         this.locationMidOfFw = locationMidOfFw;
+        this.teebox = teeboxes;
     }
 
     addTeebox = (name,color,par,scoringIndex,locationTeebox) => {
@@ -23,12 +24,12 @@ export class Hole{
     }
 }
 
-class HoleTeebox{
+export class HoleTeebox{
     name;
     color;
     par;
     scoringIndex;
-    locationTeeBox
+    locationTeeBox;
 
 
     constructor(name, color, par, scoringIndex, locationTeeBox) {

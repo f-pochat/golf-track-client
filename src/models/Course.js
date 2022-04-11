@@ -1,15 +1,18 @@
+import {gql, useMutation} from "@apollo/client";
 
 export class Course {
 
     name;
+    creator;
     holes;
     description;
     clubHouseLocation;
     teeboxes = [];
     holesList = [];
 
-    constructor(name, holes, description, clubHouseLocation, teeboxes) {
+    constructor(name,creator,holes, description, clubHouseLocation, teeboxes) {
         this.name = name;
+        this.creator = creator;
         this.holes = holes;
         this.description = description;
         this.clubHouseLocation = clubHouseLocation;
@@ -18,9 +21,5 @@ export class Course {
 
     addHole = (hole) => {
         this.holesList.push(hole);
-    }
-
-    sendCourse = () => {
-        console.log(this);
     }
 }

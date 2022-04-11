@@ -1,10 +1,11 @@
 import React, {useState} from 'react';
 import {useNavigate} from "react-router-dom";
-import MapContainer from "./map/AddClubMapContainer";
+import MapContainer from "../map/AddClubMapContainer";
 import {IoIosCheckmark, IoIosCreate, IoIosTrash} from "react-icons/io";
-import {Course} from "../models/Course";
-import AddClubMapContainer from "./map/AddClubMapContainer";
-import {Teebox} from "../models/Teebox";
+import {Course} from "../../models/Course";
+import AddClubMapContainer from "../map/AddClubMapContainer";
+import {gql, useMutation} from "@apollo/client";
+import {Teebox} from "../../models/Teebox";
 
 
 function AddCourse(props) {
@@ -28,16 +29,16 @@ function AddCourse(props) {
 
     let [teeboxes, setTeeBoxes] = useState([]);
 
-
     let navigate = useNavigate();
     const submitCourse = (e) => {
-        e.preventDefault();
+        e.preventDefault()
+;
 
         if (teeboxes.length < 1 || course.length < 0 || (clubHouse.lng === 0 && clubHouse.lng === 0)) {
             return;
         }
 
-        const courseData = new Course(course,holes,desc,clubHouse,teeboxes);
+        const courseData = new Course(course,localStorage.getItem('Name'),holes,desc,clubHouse,teeboxes);
         console.log(courseData)
         props.parentCallback(courseData);
         let path = '/addCourse/1';
@@ -82,7 +83,7 @@ function AddCourse(props) {
 
     return (
         <div className="d-flex justify-content-center h-100 ovh">
-            <link rel="stylesheet" href={require('./login/Login.css')}/>
+            <link rel="stylesheet" href={require('../login/Login.css')}/>
             <div className="d-flex flex-column w-100 justify-content-center ">
                 <form onKeyPress={event => {
                         if (event.key === 'Enter'){
@@ -166,7 +167,7 @@ function AddCourse(props) {
                                         {
                                             teeboxes.map((teebox, index) => {
                                                 return(
-                                                    <tr>
+                                                    <tr key={index}>
                                                         <td>
                                                             <input style={{alignItems:'center'}} type="color" color={teebox.color} className="align-middle" onChange={e => {
                                                                 modifyColor(index, e.target.value)

@@ -1,25 +1,46 @@
-import React, {useState} from 'react';
-import {AddHoleMapContainer} from "./map/AddHoleMapContainer";
+import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react';
+import {AddHoleMapContainer} from "../map/AddHoleMapContainer";
 import {faGolfBallTee} from "@fortawesome/free-solid-svg-icons";
+import {HoleTeebox} from "../../models/Hole";
 
-function AddHoleForm(props) {
+const AddHoleForm = forwardRef((props,ref) => {
     const course = props.course;
     const teeIndex = props.teebox;
-    const hole = props.hole;
 
-    const [par,setPar] = useState(0);
-    const [si,setSI] = useState(0);
-    const [teebox, setTee] = useState({})
+    const [hole, setHole] = useState(props.hole);
+    const [par,setPar] = useState(3);
+    const [si,setSI] = useState(1);
+    const [teebox, setTee] = useState({
+        lat:0,
+        lng:0,
+    })
     const [saved, setSaved] = useState('');
+
+    useEffect( () => {
+        setSaved('');
+    }, [props.data]);
+
+    useImperativeHandle(ref, () => ({
+
+        refresh(){
+            setTee({
+                lat:0,
+                lng:0,
+            })
+            setSaved('');
+            setHole(props.hole);
+        }
+
+    }));
 
     const saveTee = (e) => {
         e.preventDefault();
         if (saved !== teeIndex){
             setSaved(teeIndex);
-            hole.addTeebox(course.teeboxes[teeIndex].name,course.teeboxes[teeIndex].color,par,si,teebox);
+            props.parentCallback(new HoleTeebox(course.teeboxes[teeIndex].name,course.teeboxes[teeIndex].color,par,si,teebox));
         }else{
             setSaved(teeIndex);
-            hole.modifyTeebox(course.teeboxes[teeIndex].name,course.teeboxes[teeIndex].color,par,si,teebox);
+            //hole.modifyTeebox(course.teeboxes[teeIndex].name,course.teeboxes[teeIndex].color,par,si,teebox);
         }
 
     }
@@ -85,6 +106,6 @@ function AddHoleForm(props) {
             </form>
         </div>
     );
-}
+});
 
 export default AddHoleForm;

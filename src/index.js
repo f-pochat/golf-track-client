@@ -2,17 +2,17 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { ApolloProvider, ApolloClient, InMemoryCache } from "@apollo/client";
-
-
+import {ApolloProvider, ApolloClient, InMemoryCache, HttpLink, ApolloLink} from "@apollo/client";
+import { RetryLink } from '@apollo/client/link/retry';
 
 const client = new ApolloClient({
-    uri: "http://127.0.0.1:4000/admin",
+    uri: "http://localhost:4000/admin",
     cache: new InMemoryCache(),
     headers: {
         "Allow-Control-Allow-Origin":"True",
         "Authorization": "Bearer " + localStorage.getItem('TOKEN'),
-    }
+    },
+    connectToDevTools:true,
 });
 
 ReactDOM.render(
