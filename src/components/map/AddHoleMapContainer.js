@@ -4,8 +4,8 @@ import env from "react-dotenv";
 import {faMapPin} from "@fortawesome/free-solid-svg-icons";
 
 const containerStyle = {
-    width: '400px',
-    height: '300px'
+    width: '500px',
+    height: '400px'
 };
 
 export function AddHoleMapContainer(props) {
@@ -39,7 +39,7 @@ export function AddHoleMapContainer(props) {
 
     const pinMarker = {
         path: props.icon.icon[4],
-        fillColor: props.pinColor,
+        fillColor: '#fff',
         fillOpacity: 1,
         // eslint-disable-next-line no-undef
         anchor: new google.maps.Point(

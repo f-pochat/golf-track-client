@@ -7,16 +7,14 @@ export class Course {
     holes;
     description;
     clubHouseLocation;
-    teeboxes = [];
     holesList = [];
 
-    constructor(name,creator,holes, description, clubHouseLocation, teeboxes) {
+    constructor(name,creator,holes, description, clubHouseLocation) {
         this.name = name;
         this.creator = creator;
         this.holes = holes;
         this.description = description;
         this.clubHouseLocation = clubHouseLocation;
-        this.teeboxes = teeboxes;
     }
 
     addHole = (hole) => {

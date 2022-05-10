@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate, useParams} from "react-router-dom";
 import AddHoleForm from "./AddHoleForm";
 import {AddHoleMapContainer} from "../map/AddHoleMapContainer";
@@ -6,6 +6,19 @@ import {faCircleDot, faMapPin} from "@fortawesome/free-solid-svg-icons";
 import './AddHole.css';
 import {Hole} from "../../models/Hole";
 import {gql, useMutation} from "@apollo/client";
+import Modal from "react-modal";
+import {animations} from 'react-animation';
+
+const customStyles = {
+    content: {
+        animation: animations.popIn,
+        margin:'auto',
+        height: '80%',
+        width:'90%',
+        padding:'0px',
+        inset: 0,
+    },
+};
 
 const AddHole = (props) => {
 
@@ -20,9 +33,7 @@ const AddHole = (props) => {
 
     const course = props.course;
     const {number} = useParams();
-    const [currentTab, setCurrentTab] = useState(0);
-    const [teeboxesSaved, setTeeboxesSaved] = useState(0);
-    const [teeboxes, setTeeboxes] = useState([]);
+    const holes = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18];
 
     const addedHole = useRef();
 
@@ -32,6 +43,9 @@ const AddHole = (props) => {
 
     const navigate = useNavigate();
 
+    let subtitle;
+    const [modalIsOpen, setIsOpen] = useState(false);
+    const [selectedHole, setHole] = useState(0);
     const [green, setGreen] = useState({
         lat:0,
         lng:0,
@@ -42,7 +56,7 @@ const AddHole = (props) => {
         lng:0,
     });
 
-    const hole = new Hole(number,green,fw,teeboxes);
+    const hole = new Hole(number,green,fw);
 
     const greenData = (childData) => {
         setGreen(childData);
@@ -52,19 +66,24 @@ const AddHole = (props) => {
         setFw(childData);
     }
 
-    const savedTeebox = (childData) => {
-        setTeeboxesSaved(teeboxesSaved+1);
-        const aux = teeboxes;
-        aux.push(childData);
-        setTeeboxes(aux);
+    function openModal(hole) {
+        setHole(hole)
+        setIsOpen(true);
     }
+
+    function afterOpenModal() {
+        // references are now sync'd and can be accessed.
+        subtitle.style.color = '#f22';
+    }
+
+    function closeModal() {
+        setIsOpen(false);
+    }
+
 
     const addHole = () => {
         course.addHole(hole);
-        setTeeboxes([]);
 
-
-        console.log(course);
         if (parseInt(number) === course.holes){
             addCourse({
                 variables: {
@@ -109,7 +128,6 @@ const AddHole = (props) => {
             navigate('/home')
         }else{
             addedHole.current.refresh();
-            setTeeboxesSaved(0);
             let path = '/addCourse/' + (parseInt(number)+1);
             navigate(path);
         }
@@ -117,45 +135,28 @@ const AddHole = (props) => {
     }
 
     return (
-        <div className="d-flex flex-column w-100 justify-content-center ">
-            <div className="row">
-                <div className="col-4"/>
-                <div className="col-4">
-                    <h1 className="mt-4">Hole {number}</h1>
-                </div>
-                <div className="col-4">
-                    <button type="submit" className="btn btn-primary w-25 mt-4" onClick={addHole} disabled={teeboxesSaved < course.teeboxes.length}>{parseInt(number) === course.holes ? "Finish" : "Next"}</button>
-                </div>
-            </div>
-
-            <div className="row justify-content-around">
-                <div className="mt-5">
-                    <h4 htmlFor="exampleFormControlTeeBox">Mark Middle Of Green</h4>
-                    <AddHoleMapContainer icon={faMapPin} pinColor={"#fff"} parentCallback = {greenData} />
-                </div>
-                <div className="mt-5">
-                    <h4 htmlFor="exampleFormControlTeeBox">Mark Middle Of Fairway</h4>
-                    <AddHoleMapContainer icon = {faCircleDot} pinColor={"#fff"} parentCallback = {fwData}/>
-                </div>
-            </div>
-
-            <div className="d-flex justify-content-center mt-3">
-                <ul className="nav nav-tabs w-75">
+        <div>
+            <div className="d-flex flex-column mt-5">
+                <div className="row justify-content-center">
                     {
-                        course.teeboxes.map((t,i)  => {
-                            return(
-                                <li className="nav-item">
-                                    <a className={currentTab === i ? "nav-link active" : "nav-link"} data-bs-toggle="tab"  aria-current="page" onClick={() => setCurrentTab(i)}>{t.name}</a>
-                                </li>
-                                )
+                        holes.map(h => {
+                            return <button type="button" className="btn btn-danger m-2 rounded" onClick={() => openModal(h)}>{h}</button>
                         })
                     }
-                </ul>
+
+                </div>
             </div>
-            <div id="myTabContent" className="tab-content">
-                <AddHoleForm teebox={currentTab} course = {course} hole={hole} parentCallback={savedTeebox} ref={addedHole}/>
-            </div>
+            <Modal
+                isOpen={modalIsOpen}
+                onAfterOpen={afterOpenModal}
+                onRequestClose={closeModal}
+                style={customStyles}
+                contentLabel="Example Modal"
+            >
+                <AddHoleForm course={course} closeModal={closeModal} hole={selectedHole}/>
+            </Modal>
         </div>
+
     );
 }
 
