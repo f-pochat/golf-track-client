@@ -9,6 +9,7 @@ const containerStyle = {
 };
 
 export function AddHoleMapContainer(props) {
+    const course = props.course;
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: env.MAPS_KEY
@@ -17,18 +18,20 @@ export function AddHoleMapContainer(props) {
     // eslint-disable-next-line no-unused-vars
     const [map, setMap] = useState(null);
 
-    const [marker,setMarker] = useState({
-        lat: 0,
-        lng: 0,
-    })
+    const [marker,setMarker] = useState(props.usage === "teebox" ? course.holesList[props.hole - 1].locationTeebox : course.holesList[props.hole - 1].locationMidOfGreen)
 
-    /*const [center, setCenter] = useState({
-        lat:-35,
-        lng:-58,
-    })*/
+    const centerMap = props.usage === "teebox" ? course.holesList[props.hole - 1].locationTeebox : course.holesList[props.hole - 1].locationMidOfGreen;
 
     const onLoad = useCallback(function callback(map) {
-        const bounds = new window.google.maps.LatLngBounds();
+        let bounds = new window.google.maps.LatLngBounds(
+            new window.google.maps.LatLng(centerMap.lat-0.001, centerMap.lng-0.001),           // top left corner of map
+            new window.google.maps.LatLng(centerMap.lat+0.001, centerMap.lng+0.001));
+        if (centerMap.lat === 0 && centerMap.lng === 0){
+            bounds = new window.google.maps.LatLngBounds(
+                new window.google.maps.LatLng(props.course.clubHouseLocation.lat-0.001, props.course.clubHouseLocation.lng-0.001),           // top left corner of map
+                new window.google.maps.LatLng(props.course.clubHouseLocation.lat+0.001, props.course.clubHouseLocation.lng+0.001));
+
+        }
         map.fitBounds(bounds);
         setMap(map)
     }, [])
@@ -66,9 +69,9 @@ export function AddHoleMapContainer(props) {
             }}
             mapTypeId='satellite'
             mapContainerStyle={containerStyle}
-            zoom={10}
             onLoad={onLoad}
             onUnmount={onUnmount}
+            defaultZoom={8}
         >
             {marker.lat !== 0 && marker.lng !== 0 ?
                 <Marker

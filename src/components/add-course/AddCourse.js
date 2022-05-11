@@ -1,14 +1,24 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import AddClubMapContainer from "../map/AddClubMapContainer";
 import {IoIosCheckmark, IoIosTrash} from "react-icons/io";
 import {Course} from "../../models/Course";
 import AddHole from "./AddHole";
+import {gql, useMutation} from "@apollo/client";
+
+const SEND_COURSE = gql`
+    mutation AddCourse($name: String!, $creator: String!, $description: String!, $location: LocationInput!, $holes: [HoleInput]!){
+        addCourse(input: {name:$name, creator:$creator, description: $description, location: $location, holes: $holes}){
+            name
+        }
+    
+    }
+    `
 
 function AddCourse(props) {
 
     // Form
-    const [course, setCourse] = useState('');
+    const [course, setCourse] = useState(new Course('',localStorage.getItem('Name'),18,'',null));
     const [holes, setHoles] = useState(18);
     const [desc, setDesc] = useState('')
     const [location, setLocation] = useState('');
@@ -18,23 +28,65 @@ function AddCourse(props) {
     })
 
     const clubHouseData = (childData) => {
-        setClubHouse(childData);
+        course.setClubHouseLoc(childData);
     }
+
+    const [addCourse, {loading,error,data}] = useMutation(SEND_COURSE,{
+        onCompleted: res => console.log(res),
+    });
+
+
+    const addCourseQuery = () => {
+
+        addCourse({
+                variables: {
+                    name: course.name,
+                    creator: course.creator,
+                    description: course.description,
+                    location: {
+                        lat: "" + course.clubHouseLocation.lat,
+                        long: "" + course.clubHouseLocation.lng,
+                    },
+                    holes:
+                        course.holesList.map(hole => {
+                            return ({
+                                num: parseInt(hole.num),
+                                par: parseInt(hole.par),
+                                scoringIndex: parseInt(hole.scoringIndex),
+                                locationTeebox: {
+                                    lat: "" + hole.locationTeebox.lat,
+                                    long: "" + hole.locationTeebox.lng,
+                                },
+                                locationMiddleOfGreen: {
+                                    lat: "" + hole.locationMidOfGreen.lat,
+                                    long: "" + hole.locationMidOfGreen.lng,
+                                },
+                            })
+                        }),
+                }
+            }).then(r => r);
+            navigate('/home')
+    }
+
 
     let navigate = useNavigate();
     const submitCourse = (e) => {
-        e.preventDefault()
-;
-
-        if (course.length < 0 || (clubHouse.lng === 0 && clubHouse.lng === 0)) {
+        e.preventDefault();
+        console.log(course)
+        if (course.clubHouseLocation.lng === 0 && course.clubHouseLocation.lng === 0) {
             return;
         }
+        for (const hole of course.holesList) {
+            if (!hole.isSaved) {
+                return;
+            }
+        }
+        addCourseQuery();
+    }
 
-        const courseData = new Course(course,localStorage.getItem('Name'),holes,desc,clubHouse);
-        console.log(courseData)
-        props.parentCallback(courseData);
-        let path = '/addCourse/1';
-        navigate(path);
+    const changeHoles = (num) => {
+        setHoles(num)
+        course.setHoles(num)
     }
 
     return (
@@ -52,9 +104,9 @@ function AddCourse(props) {
                         <div>
                             <div className="col-md-4 col-1"/>
                             <div className="form-group col-md-4 col-10 mx-auto">
-                                <h4 htmlFor="exampleInputUsername1" className="form-label mt-4">Course name</h4>
-                                <input type="text" id="input" className="form-control" id={"course"}
-                                       placeholder="Enter course name..." onChange={e => setCourse(e.target.value)}/>
+                                <h4 htmlFor={"course"} className="form-label mt-4">Course name</h4>
+                                <input type="text" className="form-control" id={"course"}
+                                       placeholder="Enter course name..." onChange={e => course.setName(e.target.value)}/>
                             </div>
                             <div className="col-md-4 col-1"/>
                         </div>
@@ -66,14 +118,14 @@ function AddCourse(props) {
                                         <h4 htmlFor="exampleFormControlHoles">Holes</h4>
                                         <div className="form-check">
                                             <input className="form-check-input" type="radio" name="flexRadioDefault"
-                                                   id="9" checked={holes === 9} onChange={() => setHoles(9)}/>
+                                                   id="9" checked={holes === 9} onChange={() => changeHoles(9)}/>
                                                 <label className="form-check-label" htmlFor="flexRadioDefault1">
                                                      9
                                                 </label>
                                         </div>
                                         <div className="form-check">
                                             <input className="form-check-input text-secondary" type="radio" name="flexRadioDefault"
-                                                   id="18 " checked={holes === 18} onChange={() => setHoles(18)}/>
+                                                   id="18 " checked={holes === 18} onChange={() => changeHoles(18)}/>
                                                 <label className="form-check-label " htmlFor="flexRadioDefault2">
                                                     18
                                                 </label>
@@ -83,7 +135,7 @@ function AddCourse(props) {
                                     <div className="col-md-8 col-12">
                                         <div className="form-group">
                                             <h4 htmlFor="exampleFormControlTextarea1">Description</h4>
-                                            <textarea className="form-control" style={{resize: "none"}} id="exampleFormControlTextarea1" placeholder="Enter description..." rows="10" value={desc} onChange={e => setDesc(e.target.value)}/>
+                                            <textarea className="form-control" style={{resize: "none"}} id="exampleFormControlTextarea1" placeholder="Enter description..." rows="10" defaultValue={desc} onChange={e => course.setDescription(e.target.value)}/>
                                         </div>
                                     </div>
                                 </div>

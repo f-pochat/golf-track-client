@@ -2,6 +2,7 @@ import React, {forwardRef, useEffect, useImperativeHandle, useState} from 'react
 import {AddHoleMapContainer} from "../map/AddHoleMapContainer";
 import {faGolfBallTee, faFlag} from "@fortawesome/free-solid-svg-icons";
 import './AddHole.css'
+import {Hole} from "../../models/Course";
 
 const AddHoleForm = forwardRef((props,ref) => {
     const course = props.course;
@@ -9,6 +10,7 @@ const AddHoleForm = forwardRef((props,ref) => {
 
     const [par,setPar] = useState(3);
     const [si,setSI] = useState(1);
+    const [distance, setDistance] = useState(0);
     const [green, setGreen] = useState({
         lat:0,
         lng:0,
@@ -17,11 +19,6 @@ const AddHoleForm = forwardRef((props,ref) => {
         lat:0,
         lng:0,
     })
-    const [saved, setSaved] = useState('');
-
-    useEffect( () => {
-        setSaved('');
-    }, [props.data]);
 
 
     const teeboxData = (childData) => {
@@ -29,7 +26,14 @@ const AddHoleForm = forwardRef((props,ref) => {
     }
 
     const greenData = (childData) => {
-        setTee(childData);
+        setGreen(childData);
+    }
+
+    const saveHole = (e) => {
+        e.preventDefault();
+        course.addHole(hole,new Hole(hole,par,si,distance,green,teebox))
+        course.holesList[hole-1].setSaved();
+        props.closeModal();
     }
 
     return (
@@ -42,7 +46,7 @@ const AddHoleForm = forwardRef((props,ref) => {
                     <div className="row justify-content-around">
                         <div className="form-group">
                             <label htmlFor="exampleSelect1" className="form-label mt-4">Par</label>
-                            <select className="form-select ml-4" id="exampleSelect1" onChange={e => setPar(e.target.value)}>
+                            <select className="form-select ml-4" id="exampleSelect1" onChange={e => setPar(e.target.value)} defaultValue={course.holesList[hole - 1].par}>
                                 <option value={3}>3</option>
                                 <option value={4}>4</option>
                                 <option value={5}>5</option>
@@ -51,7 +55,7 @@ const AddHoleForm = forwardRef((props,ref) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="exampleSelect1" className="form-label mt-4">Scoring Index</label>
-                            <select className="form-select ml-4" id="exampleSelect1" onChange={e => setSI(e.target.value)}>
+                            <select className="form-select ml-4" id="exampleSelect1" onChange={e => setSI(e.target.value)} defaultValue={course.holesList[hole - 1].scoringIndex}>
                                 <option value={1}>1</option>
                                 <option value={2}>2</option>
                                 <option value={3}>3</option>
@@ -62,7 +66,7 @@ const AddHoleForm = forwardRef((props,ref) => {
                                 <option value={8}>8</option>
                                 <option value={9}>9</option>
                                 {
-                                    course.holes === 9 ? null :     <>
+                                   course.holes === 9 ? null :     <>
                                         <option value={10}>10</option>
                                         <option value={11}>11</option>
                                         <option value={12}>12</option>
@@ -79,7 +83,7 @@ const AddHoleForm = forwardRef((props,ref) => {
                         </div>
                         <div className="form-group">
                             <label htmlFor="exampleYds" className="form-label mt-4">Distance</label>
-                            <input id="exampleYds" className="ml-4 mr-1" type="number"/>
+                            <input id="exampleYds" className="ml-4 mr-1" type="number" defaultValue={course.holesList[hole - 1].distance} onChange={e => setDistance(e.target.value)}/>
                             <label className="form-label mt-4">yds</label>
                         </div>
                     </div>
@@ -87,19 +91,29 @@ const AddHoleForm = forwardRef((props,ref) => {
                         <div className="d-flex flex-column justify-content-center">
                             <h4 htmlFor="exampleFormControlTeeBox">Mark Middle of Green</h4>
                             <div className="d-flex justify-content-center">
-                                <AddHoleMapContainer icon = {faFlag} parentCallback = {greenData}/>
+                                <AddHoleMapContainer
+                                    usage="green"
+                                    icon = {faFlag}
+                                    hole={hole}
+                                    parentCallback = {greenData}
+                                    course={course}/>
                             </div>
                         </div>
                         <div className="d-flex flex-column justify-content-center">
                             <h4 htmlFor="exampleFormControlTeeBox">Mark Teebox</h4>
                             <div className="d-flex justify-content-center">
-                                <AddHoleMapContainer icon = {faGolfBallTee} parentCallback = {teeboxData}/>
+                                <AddHoleMapContainer
+                                    usage = "teebox"
+                                    icon = {faGolfBallTee}
+                                    hole={hole}
+                                    parentCallback = {teeboxData}
+                                    course={course}/>
                             </div>
                         </div>
                     </div>
                     <div className="row justify-content-center mt-5">
                         <button type="submit" className="btn btn-danger w-25 m-2" onClick={() => props.closeModal()}>Cancel</button>
-                        <button type="submit" className="btn btn-success w-25 m-2">Save</button>
+                        <button type="submit" className="btn btn-success w-25 m-2" onClick={saveHole}>Save</button>
                     </div>
                 </fieldset>
             </form>
