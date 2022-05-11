@@ -1,4 +1,4 @@
-import React, {useRef, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import AddHoleForm from "./AddHoleForm";
 import './AddHole.css';
@@ -20,10 +20,6 @@ const customStyles = {
 const AddHole = (props) => {
 
     const course = props.course;
-
-    const addedHole = useRef();
-
-    const navigate = useNavigate();
 
     let subtitle;
     const [modalIsOpen, setIsOpen] = useState(false);

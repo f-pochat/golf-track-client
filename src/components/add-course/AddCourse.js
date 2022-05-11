@@ -4,7 +4,7 @@ import AddClubMapContainer from "../map/AddClubMapContainer";
 import {IoIosCheckmark, IoIosTrash} from "react-icons/io";
 import {Course, Hole} from "../../models/Course";
 import AddHole from "./AddHole";
-import {gql, useMutation, useLazyQuery} from "@apollo/client";
+import {gql, useMutation, useLazyQuery, useQuery} from "@apollo/client";
 
 const SEND_COURSE = gql`
     mutation AddCourse($name: String!, $creator: String!, $description: String!, $location: LocationInput!, $holes: [HoleInput]!){
@@ -14,6 +14,15 @@ const SEND_COURSE = gql`
     
     }
     `
+
+const EDIT_COURSE = gql`
+    mutation EditCourse($id: String!,$name: String!, $creator: String!, $description: String!, $location: LocationInput!, $holes: [EditHoleInput]!){
+        editCourse(input: {id: $id, name:$name, creator:$creator, description: $description, location: $location, holes: $holes}){
+            name
+        }
+    }
+    `
+
 const COURSE = gql`
          query GetCourse($id: String!) {
             getCourse(id: $id) {
@@ -30,6 +39,7 @@ const COURSE = gql`
                   num
                   par
                   scoringIndex
+                  distance
                   locationMiddleOfGreen {
                     lat
                     long
@@ -55,23 +65,45 @@ function AddCourse(props) {
         lat:0,
         lng:0,
     })
-    const [loaded, setLoaded] = useState(false);
-    const [getCourse,{courseData}] = useLazyQuery(COURSE,{
-        onCompleted: res => setCourse(res.getCourse),
+
+    let [holesId, setHolesId] = useState([]);
+
+    //For Edit Course
+
+    const [getCourse,] = useLazyQuery(COURSE,{
+        variables: { id: id },
+        onCompleted: res => {
+            console.log(res);
+            setEditingCourse(res.getCourse);
+        },
     });
+
+    const setEditingCourse = (c) => {
+        const course = new Course(c.name, c.creator, c.holes.length, c.description, {lat: c.location.lat, lng: c.location.long});
+        for (let i = 0; i < c.holes.length; i++) {
+            let auxHolesList = [...c.holes];
+            auxHolesList = auxHolesList.sort((a,b) => {return a.num - b.num});
+            const aux = holesId;
+            aux.push(auxHolesList[i].id);
+            setHolesId(aux);
+            const newHole = new Hole(auxHolesList[i].num, auxHolesList[i].par, auxHolesList[i].scoringIndex, auxHolesList[i].distance, {lat: auxHolesList[i].locationMiddleOfGreen.lat, lng: auxHolesList[i].locationMiddleOfGreen.long}, {lat: auxHolesList[i].locationTeebox.lat, lng: auxHolesList[i].locationTeebox.long});
+            newHole.setSaved();
+            course.addHole(i+1,newHole);
+        }
+        setCourse(course);
+        console.log(holesId);
+    }
 
     const clubHouseData = (childData) => {
         course.setClubHouseLoc(childData);
     }
 
     const [addCourse, {loading,error,data}] = useMutation(SEND_COURSE,{
-        onCompleted: res => {
-            setCourse(new Course(res.getCourse.name,res.getCourse.creator, res.getCourse.holes, res.getCourse.description, res.getCourse.location));
-            for (let i = 0; i < res.getCourse.holes; i++) {
-                course.addHole(new Hole(res.getCourse.holes[i].num,res.getCourse.holes[i].par,res.getCourse.holes[i].scoringIndex,0,res.getCourse.holes[i].locationMidOfGreen,res.getCourse.holes[i].locationTeebox))
-            }
-            setLoaded(true);
-        },
+        onCompleted: res => console.log(res)
+    });
+
+    const [editCourse] = useMutation(EDIT_COURSE,{
+        onCompleted: res => console.log(res)
     });
 
     useEffect(() => {
@@ -79,6 +111,44 @@ function AddCourse(props) {
             getCourse({ variables: { id: id } })
         }
     },[])
+
+
+    const editCourseQuery = () => {
+
+        editCourse({
+            variables: {
+                id: id,
+                name: course.name,
+                creator: course.creator,
+                description: course.description,
+                location: {
+                    lat: "" + course.clubHouseLocation.lat,
+                    long: "" + course.clubHouseLocation.lng,
+                },
+                holes:
+                    course.holesList.map((hole,i) => {
+                        console.log(holesId[i]);
+                        return ({
+                            id: holesId[i],
+                            num: parseInt(hole.num),
+                            par: parseInt(hole.par),
+                            distance: parseInt(hole.distance),
+                            scoringIndex: parseInt(hole.scoringIndex),
+                            locationTeebox: {
+                                lat: "" + hole.locationTeebox.lat,
+                                long: "" + hole.locationTeebox.lng,
+                            },
+                            locationMiddleOfGreen: {
+                                lat: "" + hole.locationMidOfGreen.lat,
+                                long: "" + hole.locationMidOfGreen.lng,
+                            },
+                        })
+                    })
+            }
+        }).then(r => r);
+        navigate('/home');
+        window.location.reload();
+    }
 
 
     const addCourseQuery = () => {
@@ -97,6 +167,7 @@ function AddCourse(props) {
                             return ({
                                 num: parseInt(hole.num),
                                 par: parseInt(hole.par),
+                                distance: parseInt(hole.distance),
                                 scoringIndex: parseInt(hole.scoringIndex),
                                 locationTeebox: {
                                     lat: "" + hole.locationTeebox.lat,
@@ -110,15 +181,15 @@ function AddCourse(props) {
                         }),
                 }
             }).then(r => r);
-            navigate('/home')
+            navigate('/home');
+            window.location.reload();
     }
 
 
     let navigate = useNavigate();
     const submitCourse = (e) => {
         e.preventDefault();
-        console.log(course)
-        if (course.clubHouseLocation.lng === 0 && course.clubHouseLocation.lng === 0) {
+        if (course.name === '' || course.description === '' || (course.clubHouseLocation.lng === 0 && course.clubHouseLocation.lng === 0)) {
             return;
         }
         for (const hole of course.holesList) {
@@ -126,7 +197,11 @@ function AddCourse(props) {
                 return;
             }
         }
-        addCourseQuery();
+        if (id) {
+            editCourseQuery();
+        }else {
+            addCourseQuery();
+        }
     }
 
     const changeHoles = (num) => {
@@ -135,8 +210,7 @@ function AddCourse(props) {
     }
 
     return (
-
-            !loaded ? null : <div className="d-flex justify-content-center h-100 ovh">
+            <div className="d-flex justify-content-center h-100 ovh">
                 <link rel="stylesheet" href={require('../login/Login.css')}/>
                 <div className="d-flex flex-column w-100 justify-content-center ">
                     <form onKeyPress={event => {
@@ -152,7 +226,7 @@ function AddCourse(props) {
                                 <div className="form-group col-md-4 col-10 mx-auto">
                                     <h4 htmlFor={"course"} className="form-label mt-4">Course name</h4>
                                     <input type="text" className="form-control" id={"course"}
-                                           placeholder="Enter course name..." onChange={e => course.setName(e.target.value)}/>
+                                           placeholder="Enter course name..." onChange={e => course.setName(e.target.value)} defaultValue={course.name}/>
                                 </div>
                                 <div className="col-md-4 col-1"/>
                             </div>
@@ -181,7 +255,7 @@ function AddCourse(props) {
                                         <div className="col-md-8 col-12">
                                             <div className="form-group">
                                                 <h4 htmlFor="exampleFormControlTextarea1">Description</h4>
-                                                <textarea className="form-control" style={{resize: "none"}} id="exampleFormControlTextarea1" placeholder="Enter description..." rows="10" defaultValue={desc} onChange={e => course.setDescription(e.target.value)}/>
+                                                <textarea className="form-control" style={{resize: "none"}} id="exampleFormControlTextarea1" placeholder="Enter description..." rows="10" defaultValue={course.description} onChange={e => course.setDescription(e.target.value)}/>
                                             </div>
                                         </div>
                                     </div>
@@ -189,7 +263,7 @@ function AddCourse(props) {
                                 <div className="col-7">
                                     <h4 htmlFor="exampleFormControlTeeBox" className="align-items-center">Mark Club House</h4>
                                     <div className="d-flex justify-content-center">
-                                        <AddClubMapContainer className="align-items-center" parentCallback = {clubHouseData} />
+                                        <AddClubMapContainer className="align-items-center" parentCallback = {clubHouseData} defaultLocation={course.clubHouseLocation}/>
                                     </div>
                                 </div>
                             </div>

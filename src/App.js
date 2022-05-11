@@ -15,7 +15,6 @@ import {
 } from 'react-router-dom';
 import Home from "./components/home/Home";
 import {useState} from "react";
-import AddHole from "./components/add-course/AddHole";
 import ErrorPage from "./components/utils/ErrorPage";
 
 
@@ -61,7 +60,6 @@ function App() {
 
                 <Route path="/addCourse"
                        element={isMobile? <ErrorPage /> : <AddCourse parentCallback = {courseData}/>}/>
-                <Route path="/addCourse" element={isMobile? <ErrorPage /> : <AddHole course = {course}/>}/>
 
                 <Route path="/editCourse/:id"
                        element={getName() === '' ? <Navigate to="/" /> :  <AddCourse/>}/>

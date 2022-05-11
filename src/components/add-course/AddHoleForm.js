@@ -89,17 +89,6 @@ const AddHoleForm = forwardRef((props,ref) => {
                     </div>
                     <div className="d-flex row justify-content-around mt-4">
                         <div className="d-flex flex-column justify-content-center">
-                            <h4 htmlFor="exampleFormControlTeeBox">Mark Middle of Green</h4>
-                            <div className="d-flex justify-content-center">
-                                <AddHoleMapContainer
-                                    usage="green"
-                                    icon = {faFlag}
-                                    hole={hole}
-                                    parentCallback = {greenData}
-                                    course={course}/>
-                            </div>
-                        </div>
-                        <div className="d-flex flex-column justify-content-center">
                             <h4 htmlFor="exampleFormControlTeeBox">Mark Teebox</h4>
                             <div className="d-flex justify-content-center">
                                 <AddHoleMapContainer
@@ -107,6 +96,17 @@ const AddHoleForm = forwardRef((props,ref) => {
                                     icon = {faGolfBallTee}
                                     hole={hole}
                                     parentCallback = {teeboxData}
+                                    course={course}/>
+                            </div>
+                        </div>
+                        <div className="d-flex flex-column justify-content-center">
+                            <h4 htmlFor="exampleFormControlTeeBox">Mark Middle of Green</h4>
+                            <div className="d-flex justify-content-center">
+                                <AddHoleMapContainer
+                                    usage="green"
+                                    icon = {faFlag}
+                                    hole={hole}
+                                    parentCallback = {greenData}
                                     course={course}/>
                             </div>
                         </div>
