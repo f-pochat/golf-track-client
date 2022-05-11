@@ -1,5 +1,5 @@
 import React, {useState} from 'react';
-import {useNavigate} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import AddClubMapContainer from "../map/AddClubMapContainer";
 import {IoIosCheckmark, IoIosTrash} from "react-icons/io";
 import {Course} from "../../models/Course";
@@ -8,6 +8,8 @@ import AddHole from "./AddHole";
 function AddCourse(props) {
 
     // Form
+    const {id}=useParams();
+    console.log(id);
     const [course, setCourse] = useState('');
     const [holes, setHoles] = useState(18);
     const [desc, setDesc] = useState('')
