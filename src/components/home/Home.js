@@ -4,6 +4,8 @@ import {IoIosSearch, IoIosTrash} from "react-icons/io";
 import Modal from 'react-modal';
 import './Home.css';
 import {gql, useLazyQuery, useMutation} from '@apollo/client';
+import {AiTwotoneEdit} from "react-icons/ai";
+import {useNavigate} from "react-router-dom";
 
 const customStyles = {
     content: {
@@ -19,6 +21,7 @@ const customStyles = {
 
 function Home(props) {
 
+    const navigate=useNavigate();
     const COURSES = gql`
          query GetCourses {
             getCourses{
@@ -88,6 +91,11 @@ function Home(props) {
         setCourses(aux)
     }
 
+    const goToEdit=(course)=>{
+        navigate("/editCourse/"+course.id);
+
+    };
+
     return (
         <div>
             <Navbar user={props.user}/>
@@ -128,8 +136,13 @@ function Home(props) {
                                             {
                                                 (localStorage.getItem('Name') === course.creator || localStorage.getItem('Role') === 'Admin') ?
                                                     // eslint-disable-next-line jsx-a11y/anchor-is-valid
-                                                    <a href="#" onClick={() => openModal(course.id)}><IoIosTrash
-                                                        className="text-danger" size={40}/></a>
+                                                   <div>
+                                                       <a href="#" onClick={()=>goToEdit(course)} ><AiTwotoneEdit
+                                                           className="text-light" size={40}/></a>
+                                                       <a href="#" onClick={() => openModal(course.id)}><IoIosTrash
+                                                           className="text-danger ml-3" size={40}/></a>
+                                                   </div>
+
                                                     : null
                                             }
 

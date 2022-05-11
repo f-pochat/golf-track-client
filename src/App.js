@@ -61,7 +61,10 @@ function App() {
 
                 <Route path="/addCourse"
                        element={isMobile? <ErrorPage /> : <AddCourse parentCallback = {courseData}/>}/>
-                <Route path="/addCourse/:number" element={isMobile? <ErrorPage /> : <AddHole course = {course}/>}/>
+                <Route path="/addCourse" element={isMobile? <ErrorPage /> : <AddHole course = {course}/>}/>
+
+                <Route path="/editCourse/:id"
+                       element={getName() === '' ? <Navigate to="/" /> :  <AddCourse/>}/>
             </Routes>
         </Router>
     </div>
