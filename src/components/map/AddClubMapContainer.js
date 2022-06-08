@@ -21,13 +21,14 @@ const center = {
 };
 
 function AddClubMapContainer(props) {
-    let location = props.defaultLocation
+    let location = props.defaultLocation;
     if (!location){
         location = {
             lat:0,
             lng:0,
         }
     }
+
     const { isLoaded } = useJsApiLoader({
         id: 'google-map-script',
         googleMapsApiKey: env.MAPS_KEY
@@ -35,7 +36,10 @@ function AddClubMapContainer(props) {
 
     // eslint-disable-next-line no-unused-vars
     const [map, setMap] = useState(null);
-    const [marker,setMarker] = useState({lat:parseFloat(location.lat),lng:parseFloat(location.lng)})
+    const [marker,setMarker] = useState({
+        lat:parseFloat(location.lat),lng:parseFloat(location.lng)
+    });
+    console.log(parseFloat(location.lat));
 
     const onLoad = useCallback(function callback(map) {
         const bounds = new window.google.maps.LatLngBounds(

@@ -5,7 +5,7 @@ import reportWebVitals from './reportWebVitals';
 import {ApolloProvider, ApolloClient, InMemoryCache} from "@apollo/client";
 
 const client = new ApolloClient({
-    uri: "http://localhost:4000/admin",
+    uri: "https://golftrackapi.azurewebsites.net/admin",
     cache: new InMemoryCache(),
     headers: {
         "Allow-Control-Allow-Origin":"True",

@@ -73,7 +73,6 @@ function AddCourse(props) {
     const [getCourse,] = useLazyQuery(COURSE,{
         variables: { id: id },
         onCompleted: res => {
-            console.log(res);
             setEditingCourse(res.getCourse);
         },
     });
