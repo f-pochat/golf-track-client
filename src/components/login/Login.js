@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useNavigate} from "react-router-dom";
 import "./Login.css";
 import {gql, useMutation} from "@apollo/client";
@@ -24,10 +24,19 @@ function Login(props) {
 
     const [login] = useMutation(LOGIN);
 
-
-
-
     let navigate = useNavigate();
+    useEffect(() => {
+        if (localStorage.getItem('TOKEN')){
+            console.log('OK');
+            const admin = {
+                name: localStorage.getItem('Name'),
+                role: localStorage.getItem('Role'),
+            }
+
+            props.parentCallback(admin);
+            navigate('/home');
+        }
+    }, []);
 
     const submitUser = async(e) => {
         e.preventDefault();
@@ -43,6 +52,7 @@ function Login(props) {
             setIncorrect(true);
         }else{
             localStorage.setItem('TOKEN', loginData.data["loginAdmin"].token);
+            console.log(localStorage.getItem('TOKEN'));
             const admin = {
                 name: user,
                 role: loginData.data["loginAdmin"].role,

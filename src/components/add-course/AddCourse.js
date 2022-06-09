@@ -5,6 +5,7 @@ import {IoIosCheckmark, IoIosTrash} from "react-icons/io";
 import {Course, Hole} from "../../models/Course";
 import AddHole from "./AddHole";
 import {gql, useMutation, useLazyQuery, useQuery} from "@apollo/client";
+import BounceLoader from "react-spinners/BounceLoader";
 
 const SEND_COURSE = gql`
     mutation AddCourse($name: String!, $creator: String!, $description: String!, $location: LocationInput!, $holes: [HoleInput]!){
@@ -64,7 +65,8 @@ function AddCourse(props) {
     const [clubHouse, setClubHouse] = useState({
         lat:0,
         lng:0,
-    })
+    });
+    const [courseAdded, setCourseAdded] = useState(true);
 
     let [holesId, setHolesId] = useState([]);
 
@@ -98,11 +100,11 @@ function AddCourse(props) {
     }
 
     const [addCourse, {loading,error,data}] = useMutation(SEND_COURSE,{
-        onCompleted: res => console.log(res)
+        onCompleted: res => setCourseAdded(true)
     });
 
     const [editCourse] = useMutation(EDIT_COURSE,{
-        onCompleted: res => console.log(res)
+        onCompleted: res => setCourseAdded(true)
     });
 
     useEffect(() => {
@@ -144,11 +146,13 @@ function AddCourse(props) {
                         })
                     })
             }
-        }).then(r => r);
-        navigate('/home');
-        window.location.reload();
+        }).then(r => {
+            navigate('/home');
+            window.location.reload();
+        });
+        //navigate('/home');
+        //window.location.reload();
     }
-
 
     const addCourseQuery = () => {
 
@@ -179,14 +183,16 @@ function AddCourse(props) {
                             })
                         }),
                 }
-            }).then(r => r);
-            navigate('/home');
-            window.location.reload();
+            }).then(r => {
+                navigate('/home');
+                window.location.reload();
+        });
     }
 
 
     let navigate = useNavigate();
     const submitCourse = (e) => {
+        setCourseAdded(false);
         e.preventDefault();
         if (course.name === '' || course.description === '' || (course.clubHouseLocation.lng === 0 && course.clubHouseLocation.lng === 0)) {
             return;
@@ -206,6 +212,12 @@ function AddCourse(props) {
     const changeHoles = (num) => {
         setHoles(num)
         course.setHoles(num)
+    }
+
+    if (!courseAdded){
+        return (
+            <BounceLoader/>
+        )
     }
 
     return (
